@@ -228,7 +228,7 @@ public class MembershipForm extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel1.setText("Customer");
+        jLabel1.setText("Membership");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
