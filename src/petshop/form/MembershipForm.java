@@ -10,12 +10,12 @@ import java.awt.Cursor;
  *
  * @author Ryan Rizky
  */
-public class PetForm extends javax.swing.JPanel {
+public class MembershipForm extends javax.swing.JPanel {
 
     /**
-     * Creates new form PetCareForm
+     * Creates new form MembershipForm
      */
-    public PetForm() {
+    public MembershipForm() {
         initComponents();
 
         addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -90,7 +90,6 @@ public class PetForm extends javax.swing.JPanel {
 
         jTextField1.setToolTipText("");
         jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jTextField1.setHighlighter(null);
 
         javax.swing.GroupLayout searchBarLayout = new javax.swing.GroupLayout(searchBar);
@@ -229,7 +228,7 @@ public class PetForm extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel1.setText("Pet");
+        jLabel1.setText("Customer");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -271,13 +270,13 @@ public class PetForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void addButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseEntered
-        addButton.setBackground(new java.awt.Color(250, 250, 250));
-    }//GEN-LAST:event_addButtonMouseEntered
+    private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
+        deleteButton.setBackground(new java.awt.Color(250, 250, 250));
+    }//GEN-LAST:event_deleteButtonMouseEntered
 
-    private void addButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseExited
-        addButton.setBackground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_addButtonMouseExited
+    private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
+        deleteButton.setBackground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_deleteButtonMouseExited
 
     private void editButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseEntered
         editButton.setBackground(new java.awt.Color(250, 250, 250));
@@ -287,13 +286,13 @@ public class PetForm extends javax.swing.JPanel {
         editButton.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_editButtonMouseExited
 
-    private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
-        deleteButton.setBackground(new java.awt.Color(250, 250, 250));
-    }//GEN-LAST:event_deleteButtonMouseEntered
+    private void addButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseEntered
+        addButton.setBackground(new java.awt.Color(250, 250, 250));
+    }//GEN-LAST:event_addButtonMouseEntered
 
-    private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
-        deleteButton.setBackground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_deleteButtonMouseExited
+    private void addButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseExited
+        addButton.setBackground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_addButtonMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

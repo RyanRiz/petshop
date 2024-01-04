@@ -1,12 +1,19 @@
 color
+clicked
 2E73E4
 46,115,228
 
+normal
+A7AED3
+167, 174, 211
+
+background
 239,246,255
 
 size panel: 1221, 654
 
 component panel size: [1388, 678]
+
 user
 id
 nama lengkap
@@ -17,6 +24,7 @@ username
 password
 hak
 status
+timestamp
 
 pelanggan
 id
@@ -25,6 +33,7 @@ alamat
 jenis kelamin
 kota
 no hp
+timestamp
 
 hewan
 id
@@ -34,31 +43,31 @@ umur
 ras
 warna
 keterangan
-id pelanggan
+id member
+timestamp
 
 penitipan
 id
 tanggal masuk
 tanggal keluar
 id hewan
-subtotal
-
-barang
-id
-nama produk
-jenis produk
-harga
-stok
-
-transaksi
-id
-tanggal
 id pelanggan
-
-detail transaksi
-id
-id transaksi
-id produk
-jumlah
-harga satuan
 subtotal
+timestamp
+
+membership
+id pelanggan
+tanggal awal
+tanggal berakhir
+status
+timestamp
+
+membership transaction
+id pelanggan
+subtotal
+timestamp
+
+settings
+id
+member price
+pet care price

@@ -54,7 +54,7 @@ public class UserForm extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel1.setText("Member");
+        jLabel1.setText("Customer");
 
         addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setPreferredSize(new java.awt.Dimension(145, 51));
