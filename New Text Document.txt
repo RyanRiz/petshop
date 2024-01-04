@@ -1,0 +1,64 @@
+color
+2E73E4
+46,115,228
+
+239,246,255
+
+size panel: 1221, 654
+
+component panel size: [1388, 678]
+user
+id
+nama lengkap
+tanggal lahir
+alamat
+jenis kelamin
+username
+password
+hak
+status
+
+pelanggan
+id
+nama pelanggan
+alamat
+jenis kelamin
+kota
+no hp
+
+hewan
+id
+nama hewan
+jenis hewan
+umur
+ras
+warna
+keterangan
+id pelanggan
+
+penitipan
+id
+tanggal masuk
+tanggal keluar
+id hewan
+subtotal
+
+barang
+id
+nama produk
+jenis produk
+harga
+stok
+
+transaksi
+id
+tanggal
+id pelanggan
+
+detail transaksi
+id
+id transaksi
+id produk
+jumlah
+harga satuan
+subtotal
