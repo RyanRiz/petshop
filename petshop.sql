@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Jan 2024 pada 03.47
+-- Waktu pembuatan: 05 Jan 2024 pada 06.18
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `customers` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `phone` int(11) NOT NULL,
+  `phone` char(15) NOT NULL,
   `gender` tinyint(1) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `membership_transactions` (
   `months` int(11) NOT NULL COMMENT '1 month = 1',
   `subtotal` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
-  `total` int(11) NOT NULL,
+  `total` bigint(20) NOT NULL,
   `transaction_date` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -163,7 +163,7 @@ CREATE TABLE `users` (
   `gender` tinyint(1) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `phone` int(11) DEFAULT NULL,
+  `phone` char(15) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
