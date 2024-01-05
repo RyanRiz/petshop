@@ -3,11 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/form/UserForm.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/component/CustomerModal.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/Main.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/custom/ComboBox.java</file>
+            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/form/CustomerForm.java</file>
             <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/form/DashboardForm.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/form/PetForm.java</file>
-            <file>file:/C:/Users/Administrator/Documents/NetBeansProjects/petshop/src/petshop/form/MembershipForm.java</file>
         </group>
     </open-files>
 </project-private>

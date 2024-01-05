@@ -9,11 +9,14 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import petshop.form.DashboardForm;
 import petshop.form.MembershipForm;
 import petshop.form.PetForm;
+import petshop.component.CustomerModal;
 import petshop.form.CustomerForm;
 
 import java.awt.Color;
 
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
+import java.awt.Toolkit;
 
 
 /**
@@ -26,12 +29,27 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     public Main() {
-        
         initComponents();
+        centerFrameOnScreen();
 
         DashboardForm dashboardForm = new DashboardForm();
         bodyPanel.removeAll();
         bodyPanel.add(dashboardForm);
+    }
+
+    private void centerFrameOnScreen() {
+        // Calculate the center of the screen
+        int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+        int frameWidth = getWidth();
+        int frameHeight = getHeight();
+
+        int x = (screenWidth - frameWidth) / 2;
+        int y = (screenHeight - frameHeight) / 2;
+
+        // Set the frame location to the center
+        setLocation(x, y);
     }
 
     /**
@@ -608,6 +626,7 @@ public class Main extends javax.swing.JFrame {
         try {
             FlatIntelliJLaf.registerCustomDefaultsSource("petshop.style");
             FlatIntelliJLaf.setup();
+            UIManager.put( "TextComponent.arc", 20 );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }

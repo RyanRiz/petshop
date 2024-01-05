@@ -7,6 +7,10 @@ package petshop.form;
 import java.awt.Cursor;
 
 import com.formdev.flatlaf.ui.FlatListCellBorder.Default;
+
+import petshop.component.CustomerModal;
+import raven.toast.Notifications;
+
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -61,6 +65,14 @@ public class CustomerForm extends javax.swing.JPanel {
         }
     }
 
+    public void refreshTable() {
+        setTableData();
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -97,6 +109,9 @@ public class CustomerForm extends javax.swing.JPanel {
         addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setPreferredSize(new java.awt.Dimension(145, 51));
         addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addButtonMouseEntered(evt);
             }
@@ -333,6 +348,11 @@ public class CustomerForm extends javax.swing.JPanel {
     private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
         deleteButton.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_deleteButtonMouseExited
+
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        CustomerModal modal = new CustomerModal(this); // Pass 'this' to provide a reference to the current CustomerForm instance
+        modal.setVisible(true);
+    }//GEN-LAST:event_addButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
