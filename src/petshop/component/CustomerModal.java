@@ -294,19 +294,39 @@ public class CustomerModal extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonResetMouseClicked
 
     private void buttonAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonAdd1MouseClicked
-        try{
+        try {
+            // Validate that none of the fields are null or empty
+            String name = textName.getText();
+            String phone = textPhone.getText();
             String gender = (comboGender.getSelectedItem().equals("Laki-Laki")) ? "1" : "0";
-            String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES ('" + textName.getText() + "','" + textPhone.getText() + "','" + gender + "','" + textCity.getText() + "','" + areaAddress.getText() + "', NOW(), NOW())";            ;
-            java.sql.Connection conn=(java.sql.Connection)Database.configDB();
-            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            String city = textCity.getText();
+            String address = areaAddress.getText();
+    
+            if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
+                customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                return; // Cancel the operation if any field is null or empty
+            }
+    
+            String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+    
+            // Set parameters using PreparedStatement to avoid SQL injection
+            pst.setString(1, name);
+            pst.setString(2, phone);
+            pst.setString(3, gender);
+            pst.setString(4, city);
+            pst.setString(5, address);
+    
             pst.execute();
-            customerForm.showNotification("Berhasil menambahkan data customer", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+            customerForm.showNotification("Success added customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+    
             // Call the setTableData method from CustomerForm
             if (customerForm != null) {
                 customerForm.setTableData();
             }
             close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
         }
     }//GEN-LAST:event_buttonAdd1MouseClicked
