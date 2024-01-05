@@ -9,7 +9,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import petshop.form.DashboardForm;
 import petshop.form.MembershipForm;
 import petshop.form.PetForm;
-import petshop.form.UserForm;
+import petshop.form.CustomerForm;
 
 import java.awt.Color;
 
@@ -417,7 +417,7 @@ public class Main extends javax.swing.JFrame {
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
 
-        UserForm userForm = new UserForm();
+        CustomerForm userForm = new CustomerForm();
         bodyPanel.removeAll();
         bodyPanel.add(userForm);
         bodyPanel.revalidate();

@@ -6,21 +6,59 @@ package petshop.form;
 
 import java.awt.Cursor;
 
+import com.formdev.flatlaf.ui.FlatListCellBorder.Default;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ryan Rizky
  */
-public class UserForm extends javax.swing.JPanel {
+public class CustomerForm extends javax.swing.JPanel {
 
     /**
      * Creates new form UserForm
      */
-    public UserForm() {
+    public CustomerForm() {
         initComponents();
 
         addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        setTableData();
+    }
+
+    public void setTableData() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("No");
+        model.addColumn("Nama");
+        model.addColumn("No. Telepon");
+        model.addColumn("Jenis Kelamin");
+        model.addColumn("Alamat");
+        model.addColumn("Kota");
+
+        try {
+            int no = 1;
+            String sql = "SELECT * FROM customers";
+            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+
+            while (res.next()) {
+                String gender = (res.getString("gender").equals("1")) ? "Laki-laki" : "Perempuan";
+                model.addRow(new Object[]{
+                        no++,
+                        res.getString("name"),
+                        res.getString("phone"),
+                        gender,
+                        res.getString("address"),
+                        res.getString("city")
+                });
+            }
+            customerTable.setModel(model);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     /**
@@ -47,7 +85,7 @@ public class UserForm extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         panelRounded1 = new petshop.custom.PanelRounded();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        customerTable = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(238, 240, 244));
         setPreferredSize(new java.awt.Dimension(1398, 688));
@@ -201,7 +239,7 @@ public class UserForm extends javax.swing.JPanel {
 
         panelRounded1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -212,7 +250,8 @@ public class UserForm extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        customerTable.setFocusable(false);
+        jScrollPane1.setViewportView(customerTable);
 
         javax.swing.GroupLayout panelRounded1Layout = new javax.swing.GroupLayout(panelRounded1);
         panelRounded1.setLayout(panelRounded1Layout);
@@ -298,6 +337,7 @@ public class UserForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private petshop.custom.PanelRounded addButton;
+    private javax.swing.JTable customerTable;
     private petshop.custom.PanelRounded deleteButton;
     private petshop.custom.PanelRounded editButton;
     private javax.swing.JLabel jLabel1;
@@ -309,7 +349,6 @@ public class UserForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private petshop.custom.PanelRounded panelRounded1;
     private petshop.custom.PanelRounded searchBar;
