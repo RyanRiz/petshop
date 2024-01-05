@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import petshop.form.DashboardForm;
 import petshop.form.MembershipForm;
 import petshop.form.PetForm;
+import raven.toast.Notifications;
 import petshop.component.CustomerModal;
 import petshop.form.CustomerForm;
 
@@ -35,6 +36,8 @@ public class Main extends javax.swing.JFrame {
         DashboardForm dashboardForm = new DashboardForm();
         bodyPanel.removeAll();
         bodyPanel.add(dashboardForm);
+
+        Notifications.getInstance().setJFrame(this);
     }
 
     private void centerFrameOnScreen() {
