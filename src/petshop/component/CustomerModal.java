@@ -296,7 +296,7 @@ public class CustomerModal extends javax.swing.JFrame {
     private void buttonAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonAdd1MouseClicked
         try{
             String gender = (comboGender.getSelectedItem().equals("Laki-Laki")) ? "1" : "0";
-            String sql = "INSERT INTO customers (name, phone, gender, city, address) VALUES ('" + textName.getText() + "','" + textPhone.getText() + "','" + gender + "','" + textCity.getText() + "','" + areaAddress.getText() + "')";            ;
+            String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES ('" + textName.getText() + "','" + textPhone.getText() + "','" + gender + "','" + textCity.getText() + "','" + areaAddress.getText() + "', NOW(), NOW())";            ;
             java.sql.Connection conn=(java.sql.Connection)Database.configDB();
             java.sql.PreparedStatement pst=conn.prepareStatement(sql);
             pst.execute();
