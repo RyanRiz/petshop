@@ -50,7 +50,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
         setGenderComboBox();
     }
 
-    public void setFieldData(){
+    public void setFieldData() {
         textID.setText(String.valueOf(id));
         textName.setText(name);
         textPhone.setText(phone);

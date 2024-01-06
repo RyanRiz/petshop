@@ -7,6 +7,7 @@ package petshop.component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import petshop.config.Database;
 import petshop.form.PetForm;
 import raven.toast.Notifications;
 
@@ -351,8 +352,8 @@ public class PetEditModal extends javax.swing.JFrame {
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
 
-            String sql = "UPDATE pets SET name = ?, breed = ?, color = ?, age = ?, description = ?, customer_id = (SELECT id FROM customers WHERE name = ?) WHERE id = ?";
-            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            String sql = "UPDATE pets SET name = ?, breed = ?, color = ?, age = ?, description = ?, customer_id = (SELECT id FROM customers WHERE name = ?), updated_at = NOW() WHERE id = ?";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
             pst.setString(1, name);

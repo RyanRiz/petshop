@@ -15,6 +15,7 @@ import javax.swing.table.TableRowSorter;
 import petshop.component.PetEditModal;
 import petshop.component.PetInsertModal;
 import raven.toast.Notifications;
+import petshop.config.Database;
 
 
 /**
@@ -37,7 +38,12 @@ public class PetForm extends javax.swing.JPanel {
     }
 
     public void setTableData(){
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("ID");
         model.addColumn("Nama Hewan");
         model.addColumn("Jenis Hewan");
@@ -48,7 +54,7 @@ public class PetForm extends javax.swing.JPanel {
 
         try {
             String sql = "SELECT p.id, p.name, p.breed, p.color, p.age, p.description, c.name FROM pets as p JOIN customers as c ON p.customer_id = c.id";
-            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet res = stm.executeQuery(sql);
 

@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 
+import petshop.config.Database;
 import petshop.form.PetForm;
 
 import java.awt.Toolkit;
@@ -317,10 +318,10 @@ public class PetInsertModal extends javax.swing.JFrame {
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
     
-            String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id) " +
-                         "VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1))";
+            String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id, created_at, updated_at) " +
+                         "VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1), NOW(), NOW())";
     
-            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
     
             if (petName.isEmpty() || breed.isEmpty() || color.isEmpty()) {
                 petForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);

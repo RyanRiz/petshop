@@ -9,6 +9,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import petshop.form.DashboardForm;
 import petshop.form.MembershipForm;
 import petshop.form.PetForm;
+import petshop.form.SettingForm;
 import raven.toast.Notifications;
 import petshop.component.CustomerInsertModal;
 import petshop.form.CustomerForm;
@@ -615,6 +616,12 @@ public class Main extends javax.swing.JFrame {
         memberIconClicked = false;
         memberIcon.setBackground(new Color(255,255,255));
         jLabel10.setIcon(memberNormal);
+
+        SettingForm settingForm = new SettingForm();
+        bodyPanel.removeAll();
+        bodyPanel.add(settingForm);
+        bodyPanel.revalidate();
+        bodyPanel.repaint();
     }//GEN-LAST:event_settingIconMouseClicked
 
     /**

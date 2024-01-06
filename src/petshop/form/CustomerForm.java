@@ -38,7 +38,12 @@ public class CustomerForm extends javax.swing.JPanel {
     }
 
     public void setTableData() {
-        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         model.addColumn("ID");
         model.addColumn("Nama");
         model.addColumn("No. Telepon");
@@ -48,12 +53,12 @@ public class CustomerForm extends javax.swing.JPanel {
 
         try {
             String sql = "SELECT * FROM customers";
-            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet res = stm.executeQuery(sql);
 
             while (res.next()) {
-                String gender = (res.getString("gender").equals("1")) ? "Laki-laki" : "Perempuan";
+                String gender = (res.getString("gender").equals("1")) ? "Laki-Laki" : "Perempuan";
                 model.addRow(new Object[]{
                         res.getString("id"),
                         res.getString("name"),
@@ -369,7 +374,7 @@ public class CustomerForm extends javax.swing.JPanel {
         modal.setVisible(true);
     }//GEN-LAST:event_addButtonMouseClicked
 
-    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
+    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {                                    
         String searchText = textSearch.getText().trim();
         
         // Get the table model and apply a RowSorter to it
@@ -379,7 +384,7 @@ public class CustomerForm extends javax.swing.JPanel {
         // Add a RowFilter based on the search text
         RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
         rowSorter.setRowFilter(rowFilter);
-    }//GEN-LAST:event_textSearchKeyTyped                                                                                                    
+    }                                                                                                                                       
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {
         int selectedRow = customerTable.getSelectedRow();
