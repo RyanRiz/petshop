@@ -6,8 +6,13 @@ package petshop.form;
 
 import java.awt.Cursor;
 
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
+import petshop.component.PetEditModal;
 import petshop.component.PetInsertModal;
 import raven.toast.Notifications;
 
@@ -58,7 +63,7 @@ public class PetForm extends javax.swing.JPanel {
                     res.getString("c.name")
                 });
             }
-            jTable1.setModel(model);
+            petTable.setModel(model);
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -83,10 +88,10 @@ public class PetForm extends javax.swing.JPanel {
 
         panelRounded1 = new petshop.custom.PanelRounded();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        searchBar = new petshop.custom.PanelRounded();
+        petTable = new javax.swing.JTable();
+        searchPanel = new petshop.custom.PanelRounded();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textSearch = new javax.swing.JTextField();
         deleteButton = new petshop.custom.PanelRounded();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -102,7 +107,7 @@ public class PetForm extends javax.swing.JPanel {
 
         panelRounded1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        petTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -113,7 +118,8 @@ public class PetForm extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        petTable.setFocusable(false);
+        jScrollPane1.setViewportView(petTable);
 
         javax.swing.GroupLayout panelRounded1Layout = new javax.swing.GroupLayout(panelRounded1);
         panelRounded1.setLayout(panelRounded1Layout);
@@ -132,39 +138,47 @@ public class PetForm extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        searchBar.setBackground(new java.awt.Color(255, 255, 255));
-        searchBar.setPreferredSize(new java.awt.Dimension(145, 51));
+        searchPanel.setBackground(new java.awt.Color(255, 255, 255));
+        searchPanel.setPreferredSize(new java.awt.Dimension(145, 51));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/magnify.png"))); // NOI18N
 
-        jTextField1.setToolTipText("");
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField1.setHighlighter(null);
+        textSearch.setToolTipText("");
+        textSearch.setBorder(null);
+        textSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        textSearch.setHighlighter(null);
+        textSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textSearchKeyTyped(evt);
+            }
+        });
 
-        javax.swing.GroupLayout searchBarLayout = new javax.swing.GroupLayout(searchBar);
-        searchBar.setLayout(searchBarLayout);
-        searchBarLayout.setHorizontalGroup(
-            searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchBarLayout.createSequentialGroup()
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addComponent(textSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(20, 20, 20))
         );
-        searchBarLayout.setVerticalGroup(
-            searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchBarLayout.createSequentialGroup()
+        searchPanelLayout.setVerticalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel10)
                 .addContainerGap(13, Short.MAX_VALUE))
-            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(textSearch, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         deleteButton.setBackground(new java.awt.Color(255, 255, 255));
         deleteButton.setPreferredSize(new java.awt.Dimension(145, 51));
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 deleteButtonMouseEntered(evt);
             }
@@ -203,6 +217,9 @@ public class PetForm extends javax.swing.JPanel {
         editButton.setBackground(new java.awt.Color(255, 255, 255));
         editButton.setPreferredSize(new java.awt.Dimension(110, 51));
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 editButtonMouseEntered(evt);
             }
@@ -303,7 +320,7 @@ public class PetForm extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
@@ -316,7 +333,7 @@ public class PetForm extends javax.swing.JPanel {
                     .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelRounded1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
@@ -352,6 +369,74 @@ public class PetForm extends javax.swing.JPanel {
         petInsertModal.setVisible(true);
     }//GEN-LAST:event_addButtonMouseClicked
 
+    private void editButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseClicked
+        int selectedRow = petTable.getSelectedRow();
+        if(selectedRow != -1){
+            String id = petTable.getValueAt(selectedRow, 0).toString();
+            String name = petTable.getValueAt(selectedRow, 1).toString();
+            String breed = petTable.getValueAt(selectedRow, 2).toString();
+            String color = petTable.getValueAt(selectedRow, 3).toString();
+            String age = petTable.getValueAt(selectedRow, 4).toString();
+            String description = petTable.getValueAt(selectedRow, 5).toString();
+            String customerName = petTable.getValueAt(selectedRow, 6).toString();
+
+            PetEditModal petEditModal = new PetEditModal(PetForm.this, id, name, breed, color, age, description, customerName);
+            petEditModal.setVisible(true);
+        }else{
+            showNotification("Please select a row to edit.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+        }
+        
+    }//GEN-LAST:event_editButtonMouseClicked
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        int selectedRow = petTable.getSelectedRow();
+        
+        if (selectedRow != -1){
+            String id = (String) petTable.getValueAt(selectedRow, 0);
+
+            int confirmDialogResult = JOptionPane.showConfirmDialog(
+                        this,
+                        "Are you sure you want to delete this pets?",
+                        "Confirm Deletion",
+                        JOptionPane.YES_NO_OPTION);
+            
+            if (confirmDialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    String sql = "DELETE FROM pets WHERE id=?";
+                    java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+                    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+    
+                    pst.setString(1, id);
+    
+                    int rowsAffected = pst.executeUpdate();
+    
+                    if (rowsAffected > 0) {
+                        showNotification("Pet deleted successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                        refreshTable();
+                    } else {
+                        showNotification("Failed to delete pet", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                    }
+                } catch (Exception e) {
+                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                }
+            }
+        } else {
+            showNotification("Please select a row to delete.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
+
+    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
+        String searchText = textSearch.getText().trim();
+        
+        // Get the table model and apply a RowSorter to it
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(petTable.getModel());
+        petTable.setRowSorter(rowSorter);
+
+        // Add a RowFilter based on the search text
+        RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
+        rowSorter.setRowFilter(rowFilter);
+    }//GEN-LAST:event_textSearchKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private petshop.custom.PanelRounded addButton;
@@ -366,9 +451,9 @@ public class PetForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private petshop.custom.PanelRounded panelRounded1;
-    private petshop.custom.PanelRounded searchBar;
+    private javax.swing.JTable petTable;
+    private petshop.custom.PanelRounded searchPanel;
+    private javax.swing.JTextField textSearch;
     // End of variables declaration//GEN-END:variables
 }
