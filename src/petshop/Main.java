@@ -10,7 +10,7 @@ import petshop.form.DashboardForm;
 import petshop.form.MembershipForm;
 import petshop.form.PetForm;
 import raven.toast.Notifications;
-import petshop.component.CustomerModal;
+import petshop.component.CustomerInsertModal;
 import petshop.form.CustomerForm;
 
 import java.awt.Color;

@@ -6,12 +6,15 @@ package petshop.form;
 
 import java.awt.Cursor;
 
-import com.formdev.flatlaf.ui.FlatListCellBorder.Default;
-
-import petshop.component.CustomerModal;
+import petshop.component.CustomerEditModal;
+import petshop.component.CustomerInsertModal;
 import raven.toast.Notifications;
 
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -19,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CustomerForm extends javax.swing.JPanel {
 
+    CustomerEditModal customerEditModal;
     /**
      * Creates new form UserForm
      */
@@ -34,7 +38,7 @@ public class CustomerForm extends javax.swing.JPanel {
 
     public void setTableData() {
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("No");
+        model.addColumn("ID");
         model.addColumn("Nama");
         model.addColumn("No. Telepon");
         model.addColumn("Jenis Kelamin");
@@ -42,7 +46,6 @@ public class CustomerForm extends javax.swing.JPanel {
         model.addColumn("Kota");
 
         try {
-            int no = 1;
             String sql = "SELECT * FROM customers";
             java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
             java.sql.Statement stm = conn.createStatement();
@@ -51,7 +54,7 @@ public class CustomerForm extends javax.swing.JPanel {
             while (res.next()) {
                 String gender = (res.getString("gender").equals("1")) ? "Laki-laki" : "Perempuan";
                 model.addRow(new Object[]{
-                        no++,
+                        res.getString("id"),
                         res.getString("name"),
                         res.getString("phone"),
                         gender,
@@ -94,7 +97,7 @@ public class CustomerForm extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         searchBar = new petshop.custom.PanelRounded();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textSearch = new javax.swing.JTextField();
         panelRounded1 = new petshop.custom.PanelRounded();
         jScrollPane1 = new javax.swing.JScrollPane();
         customerTable = new javax.swing.JTable();
@@ -150,6 +153,9 @@ public class CustomerForm extends javax.swing.JPanel {
         editButton.setBackground(new java.awt.Color(255, 255, 255));
         editButton.setPreferredSize(new java.awt.Dimension(110, 51));
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 editButtonMouseEntered(evt);
             }
@@ -188,6 +194,9 @@ public class CustomerForm extends javax.swing.JPanel {
         deleteButton.setBackground(new java.awt.Color(255, 255, 255));
         deleteButton.setPreferredSize(new java.awt.Dimension(145, 51));
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 deleteButtonMouseEntered(evt);
             }
@@ -228,9 +237,14 @@ public class CustomerForm extends javax.swing.JPanel {
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/magnify.png"))); // NOI18N
 
-        jTextField1.setToolTipText("");
-        jTextField1.setBorder(null);
-        jTextField1.setHighlighter(null);
+        textSearch.setToolTipText("");
+        textSearch.setBorder(null);
+        textSearch.setHighlighter(null);
+        textSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textSearchKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout searchBarLayout = new javax.swing.GroupLayout(searchBar);
         searchBar.setLayout(searchBarLayout);
@@ -238,7 +252,7 @@ public class CustomerForm extends javax.swing.JPanel {
             searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchBarLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addComponent(textSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(20, 20, 20))
@@ -249,7 +263,7 @@ public class CustomerForm extends javax.swing.JPanel {
                 .addGap(13, 13, 13)
                 .addComponent(jLabel10)
                 .addContainerGap(13, Short.MAX_VALUE))
-            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(textSearch, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         panelRounded1.setBackground(new java.awt.Color(255, 255, 255));
@@ -350,9 +364,77 @@ public class CustomerForm extends javax.swing.JPanel {
     }//GEN-LAST:event_deleteButtonMouseExited
 
     private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
-        CustomerModal modal = new CustomerModal(this); // Pass 'this' to provide a reference to the current CustomerForm instance
+        CustomerInsertModal modal = new CustomerInsertModal(this); // Pass 'this' to provide a reference to the current CustomerForm instance
         modal.setVisible(true);
     }//GEN-LAST:event_addButtonMouseClicked
+
+    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {                                    
+        String searchText = textSearch.getText().trim();
+        
+        // Get the table model and apply a RowSorter to it
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(customerTable.getModel());
+        customerTable.setRowSorter(rowSorter);
+
+        // Add a RowFilter based on the search text
+        RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
+        rowSorter.setRowFilter(rowFilter);
+    }//GEN-LAST:event_textSearchKeyTyped
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {
+        int selectedRow = customerTable.getSelectedRow();
+    
+        if (selectedRow != -1) {
+            String id = (String) customerTable.getValueAt(selectedRow, 0);
+    
+            int confirmDialogResult = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to delete this customer?",
+                    "Confirm Deletion",
+                    JOptionPane.YES_NO_OPTION);
+    
+            if (confirmDialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    String sql = "DELETE FROM customers WHERE id=?";
+                    java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+                    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+    
+                    pst.setString(1, id);
+    
+                    int rowsAffected = pst.executeUpdate();
+    
+                    if (rowsAffected > 0) {
+                        showNotification("Customer deleted successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                        setTableData();
+                    } else {
+                        showNotification("Failed to delete customer", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                    }
+                } catch (Exception e) {
+                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                }
+            }
+        } else {
+            showNotification("Please select a row to delete.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }                                         
+
+    private void editButtonMouseClicked(java.awt.event.MouseEvent evt) {                                          
+        int selectedRow = customerTable.getSelectedRow();
+        if (selectedRow != -1) {
+            // Retrieve data from the selected row, including the ID
+            String id = (String) customerTable.getValueAt(selectedRow, 0);
+            String name = (String) customerTable.getValueAt(selectedRow, 1);
+            String phone = (String) customerTable.getValueAt(selectedRow, 2);
+            String gender = (String) customerTable.getValueAt(selectedRow, 3);
+            String city = (String) customerTable.getValueAt(selectedRow, 4);
+            String address = (String) customerTable.getValueAt(selectedRow, 5);
+    
+            // Open CustomerEditModal and pass the data, including the ID
+            CustomerEditModal editModal = new CustomerEditModal(CustomerForm.this, id, name, phone, gender, city, address);
+            editModal.setVisible(true);
+        } else {
+            showNotification("Please select a row to edit.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }                                       
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -369,8 +451,8 @@ public class CustomerForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private petshop.custom.PanelRounded panelRounded1;
     private petshop.custom.PanelRounded searchBar;
+    private javax.swing.JTextField textSearch;
     // End of variables declaration//GEN-END:variables
 }

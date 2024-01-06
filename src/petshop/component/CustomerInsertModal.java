@@ -20,7 +20,7 @@ import java.awt.Toolkit;
  *
  * @author Ryan Rizky
  */
-public class CustomerModal extends javax.swing.JFrame {
+public class CustomerInsertModal extends javax.swing.JFrame {
 
     private int mouseX, mouseY;
     private CustomerForm customerForm;
@@ -28,7 +28,7 @@ public class CustomerModal extends javax.swing.JFrame {
     /**
      * Creates new form CustomerModal
      */
-    public CustomerModal(CustomerForm customerForm) {
+    public CustomerInsertModal(CustomerForm customerForm) {
         initComponents();
         this.customerForm = customerForm;
         addDraggableMouseListener();
@@ -121,6 +121,7 @@ public class CustomerModal extends javax.swing.JFrame {
         buttonAdd1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(238, 240, 244));
         setUndecorated(true);
         setType(java.awt.Window.Type.POPUP);
 
@@ -348,13 +349,6 @@ public class CustomerModal extends javax.swing.JFrame {
             System.err.println( "Failed to initialize LaF" );
         }
         //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                // new CustomerModal().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
