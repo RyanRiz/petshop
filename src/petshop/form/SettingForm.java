@@ -4,6 +4,9 @@
  */
 package petshop.form;
 
+import petshop.config.Database;
+import raven.toast.Notifications;
+
 /**
  *
  * @author Ryan Rizky
@@ -15,6 +18,32 @@ public class SettingForm extends javax.swing.JPanel {
      */
     public SettingForm() {
         initComponents();
+
+        setField();
+    }
+
+    public void setField() {
+        String price = "";
+        String discount = "";
+        try {
+            String sql = "SELECT * FROM settings";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+
+            while(res.next()){
+                price = res.getString("price");
+                discount = res.getString("discount");
+                textPrice.setText(price);
+                textDiscount.setText(discount);
+            }
+        } catch (Exception e) {
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     /**
@@ -35,7 +64,7 @@ public class SettingForm extends javax.swing.JPanel {
         panelRounded2 = new petshop.custom.PanelRounded();
         jLabel3 = new javax.swing.JLabel();
         textDiscount = new javax.swing.JTextField();
-        buttonPrice1 = new javax.swing.JButton();
+        buttonDiscount = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(238, 240, 244));
 
@@ -56,6 +85,11 @@ public class SettingForm extends javax.swing.JPanel {
 
         buttonPrice.setText("Set Price");
         buttonPrice.setFocusable(false);
+        buttonPrice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonPriceActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRounded1Layout = new javax.swing.GroupLayout(panelRounded1);
         panelRounded1.setLayout(panelRounded1Layout);
@@ -92,8 +126,13 @@ public class SettingForm extends javax.swing.JPanel {
 
         textDiscount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        buttonPrice1.setText("Set Discount");
-        buttonPrice1.setFocusable(false);
+        buttonDiscount.setText("Set Discount");
+        buttonDiscount.setFocusable(false);
+        buttonDiscount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonDiscountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelRounded2Layout = new javax.swing.GroupLayout(panelRounded2);
         panelRounded2.setLayout(panelRounded2Layout);
@@ -102,7 +141,7 @@ public class SettingForm extends javax.swing.JPanel {
             .addGroup(panelRounded2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(panelRounded2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buttonPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelRounded2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel3)
                         .addComponent(textDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -116,7 +155,7 @@ public class SettingForm extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(textDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(buttonPrice1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonDiscount, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
 
@@ -144,10 +183,36 @@ public class SettingForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPriceActionPerformed
+        try {
+            String price = textPrice.getText();
+            String sql = "UPDATE settings SET price = '"+price+"'";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            showNotification("Price updated!", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
+        } catch (Exception e) {
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }//GEN-LAST:event_buttonPriceActionPerformed
+
+    private void buttonDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiscountActionPerformed
+        try {
+            String discount = textDiscount.getText();
+            String sql = "UPDATE settings SET discount = '"+discount+"'";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            showNotification("Discount updated!", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
+        } catch (Exception e) {
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }//GEN-LAST:event_buttonDiscountActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonDiscount;
     private javax.swing.JButton buttonPrice;
-    private javax.swing.JButton buttonPrice1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

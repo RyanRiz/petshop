@@ -70,7 +70,7 @@ public class CustomerForm extends javax.swing.JPanel {
             }
             customerTable.setModel(model);
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -377,11 +377,9 @@ public class CustomerForm extends javax.swing.JPanel {
     private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {                                    
         String searchText = textSearch.getText().trim();
         
-        // Get the table model and apply a RowSorter to it
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(customerTable.getModel());
         customerTable.setRowSorter(rowSorter);
 
-        // Add a RowFilter based on the search text
         RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
         rowSorter.setRowFilter(rowFilter);
     }                                                                                                                                       
@@ -415,7 +413,7 @@ public class CustomerForm extends javax.swing.JPanel {
                         showNotification("Failed to delete customer", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
                     }
                 } catch (Exception e) {
-                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                 }
             }
         } else {

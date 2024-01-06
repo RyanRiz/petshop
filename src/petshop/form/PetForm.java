@@ -71,7 +71,7 @@ public class PetForm extends javax.swing.JPanel {
             }
             petTable.setModel(model);
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -434,11 +434,9 @@ public class PetForm extends javax.swing.JPanel {
     private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
         String searchText = textSearch.getText().trim();
         
-        // Get the table model and apply a RowSorter to it
         TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(petTable.getModel());
         petTable.setRowSorter(rowSorter);
 
-        // Add a RowFilter based on the search text
         RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
         rowSorter.setRowFilter(rowFilter);
     }//GEN-LAST:event_textSearchKeyTyped

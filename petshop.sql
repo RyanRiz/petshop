@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 05 Jan 2024 pada 06.18
+-- Waktu pembuatan: 06 Jan 2024 pada 18.33
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -125,7 +125,6 @@ CREATE TABLE `petcares` (
 CREATE TABLE `pets` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `species` varchar(255) NOT NULL,
   `breed` varchar(255) NOT NULL,
   `color` varchar(255) NOT NULL,
   `age` varchar(255) NOT NULL,
@@ -143,11 +142,18 @@ CREATE TABLE `pets` (
 
 CREATE TABLE `settings` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `settings_name` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
+  `price` varchar(255) NOT NULL DEFAULT '0',
+  `discount` varchar(255) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `settings`
+--
+
+INSERT INTO `settings` (`id`, `price`, `discount`, `created_at`, `updated_at`) VALUES
+(1, '10000', '20', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -271,7 +277,7 @@ ALTER TABLE `pets`
 -- AUTO_INCREMENT untuk tabel `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

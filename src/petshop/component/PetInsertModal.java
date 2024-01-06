@@ -62,7 +62,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 

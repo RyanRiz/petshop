@@ -51,7 +51,6 @@ public class PetEditModal extends javax.swing.JFrame {
         textAge.setText(age);
         areaDescription.setText(description);
         
-        // Find the index of the customerName in the comboCustomer model
         for (int i = 0; i < comboCustomer.getItemCount(); i++) {
             if (comboCustomer.getItemAt(i).equals(customerName)) {
                 comboCustomer.setSelectedIndex(i);
@@ -80,11 +79,9 @@ public class PetEditModal extends javax.swing.JFrame {
     }
 
     private void addDraggableMouseListener() {
-        // Add a mouse listener to the entire frame
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                // Get the current mouse coordinates
                 mouseX = e.getX();
                 mouseY = e.getY();
             }
@@ -93,18 +90,15 @@ public class PetEditModal extends javax.swing.JFrame {
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                // Calculate the new location of the frame
                 int newX = e.getXOnScreen() - mouseX;
                 int newY = e.getYOnScreen() - mouseY;
 
-                // Set the new location of the frame
                 setLocation(newX, newY);
             }
         });
     }
 
     private void centerFrameOnScreen() {
-        // Calculate the center of the screen
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
@@ -114,7 +108,6 @@ public class PetEditModal extends javax.swing.JFrame {
         int x = (screenWidth - frameWidth) / 2;
         int y = (screenHeight - frameHeight) / 2;
 
-        // Set the frame location to the center
         setLocation(x, y);
     }
 
@@ -375,7 +368,7 @@ public class PetEditModal extends javax.swing.JFrame {
 
             close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonUpdateMouseClicked
 

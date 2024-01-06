@@ -37,16 +37,13 @@ public class CustomerInsertModal extends javax.swing.JFrame {
     }
 
     private void setGenderComboBox() {
-        // Clear existing items
         comboGender.removeAllItems();
     
-        // Add gender options
         comboGender.addItem("Laki-Laki");
         comboGender.addItem("Perempuan");
     }
 
     private void resetForm() {
-        // Reset all form fields
         textName.setText("");
         textPhone.setText("");
         comboGender.setSelectedIndex(0);
@@ -55,11 +52,9 @@ public class CustomerInsertModal extends javax.swing.JFrame {
     }
 
     private void addDraggableMouseListener() {
-        // Add a mouse listener to the entire frame
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                // Get the current mouse coordinates
                 mouseX = e.getX();
                 mouseY = e.getY();
             }
@@ -68,18 +63,15 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                // Calculate the new location of the frame
                 int newX = e.getXOnScreen() - mouseX;
                 int newY = e.getYOnScreen() - mouseY;
 
-                // Set the new location of the frame
                 setLocation(newX, newY);
             }
         });
     }
 
     private void centerFrameOnScreen() {
-        // Calculate the center of the screen
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
@@ -89,7 +81,6 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         int x = (screenWidth - frameWidth) / 2;
         int y = (screenHeight - frameHeight) / 2;
 
-        // Set the frame location to the center
         setLocation(x, y);
     }
     
@@ -292,7 +283,6 @@ public class CustomerInsertModal extends javax.swing.JFrame {
 
     private void buttonAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonAdd1MouseClicked
         try {
-            // Validate that none of the fields are null or empty
             String name = textName.getText();
             String phone = textPhone.getText();
             String gender = (comboGender.getSelectedItem().equals("Laki-Laki")) ? "1" : "0";
@@ -301,14 +291,13 @@ public class CustomerInsertModal extends javax.swing.JFrame {
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
                 customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
-                return; // Cancel the operation if any field is null or empty
+                return;
             }
     
             String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     
-            // Set parameters using PreparedStatement to avoid SQL injection
             pst.setString(1, name);
             pst.setString(2, phone);
             pst.setString(3, gender);
@@ -318,10 +307,10 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             pst.execute();
             customerForm.showNotification("Success added customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
     
-            // Call the setTableData method from CustomerForm
             if (customerForm != null) {
                 customerForm.setTableData();
             }
+            
             close();
         } catch (Exception e) {
             customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);

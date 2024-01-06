@@ -59,14 +59,11 @@ public class CustomerEditModal extends javax.swing.JFrame {
     }
 
     private void setGenderComboBox() {
-        // Clear existing items
         comboGender.removeAllItems();
     
-        // Add gender options
         comboGender.addItem("Laki-Laki");
         comboGender.addItem("Perempuan");
 
-        // Set the selected item based on the provided gender value
         if ("Laki-Laki".equals(gender)) {
             comboGender.setSelectedItem("Laki-Laki");
         } else if ("Perempuan".equals(gender)) {
@@ -75,7 +72,6 @@ public class CustomerEditModal extends javax.swing.JFrame {
     }
 
     private void resetForm() {
-        // Reset all form fields
         textName.setText("");
         textPhone.setText("");
         comboGender.setSelectedIndex(0);
@@ -84,11 +80,9 @@ public class CustomerEditModal extends javax.swing.JFrame {
     }
 
     private void addDraggableMouseListener() {
-        // Add a mouse listener to the entire frame
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                // Get the current mouse coordinates
                 mouseX = e.getX();
                 mouseY = e.getY();
             }
@@ -97,18 +91,15 @@ public class CustomerEditModal extends javax.swing.JFrame {
         this.addMouseMotionListener(new MouseAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                // Calculate the new location of the frame
                 int newX = e.getXOnScreen() - mouseX;
                 int newY = e.getYOnScreen() - mouseY;
 
-                // Set the new location of the frame
                 setLocation(newX, newY);
             }
         });
     }
 
     private void centerFrameOnScreen() {
-        // Calculate the center of the screen
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 
@@ -118,12 +109,11 @@ public class CustomerEditModal extends javax.swing.JFrame {
         int x = (screenWidth - frameWidth) / 2;
         int y = (screenHeight - frameHeight) / 2;
 
-        // Set the frame location to the center
         setLocation(x, y);
     }
 
     private void close() {
-        this.dispose(); // Close the customer modal
+        this.dispose();
     }
 
     /**
@@ -345,30 +335,29 @@ public class CustomerEditModal extends javax.swing.JFrame {
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
                 customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
-                return; // Cancel the operation if any field is null or empty
+                return;
             }
     
             String sql = "UPDATE customers SET name=?, phone=?, gender=?, address=?, city=?, updated_at=NOW() WHERE id=?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     
-            // Set parameters using PreparedStatement to avoid SQL injection
             pst.setString(1, name);
             pst.setString(2, phone);
             pst.setString(3, gender);
             pst.setString(4, address);
             pst.setString(5, city);
-            pst.setInt(6, id); // Assuming 'id' is the customer ID obtained during initialization
+            pst.setInt(6, id);
     
             int rowsAffected = pst.executeUpdate();
     
             if (rowsAffected > 0) {
                 customerForm.showNotification("Success updated customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
     
-                // Call the setTableData method from CustomerForm
                 if (customerForm != null) {
                     customerForm.setTableData();
                 }
+
                 close();
             } else {
                 customerForm.showNotification("Failed to update customer information", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
