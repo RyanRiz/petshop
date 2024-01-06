@@ -188,7 +188,7 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         panelRounded1Layout.setVerticalGroup(
             panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRounded1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addComponent(textName)
@@ -227,9 +227,9 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         buttonCancel.setForeground(new java.awt.Color(255, 255, 255));
         buttonCancel.setText("Batal");
         buttonCancel.setFocusable(false);
-        buttonCancel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                buttonCancelMouseClicked(evt);
+        buttonCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelActionPerformed(evt);
             }
         });
 
@@ -282,10 +282,6 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonCancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonCancelMouseClicked
-        close();
-    }//GEN-LAST:event_buttonCancelMouseClicked
-
     private void close() {
         this.dispose(); // Close the customer modal
     }
@@ -332,6 +328,10 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_buttonAdd1MouseClicked
 
+    private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
+        close();
+    }//GEN-LAST:event_buttonCancelActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -344,7 +344,10 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         try {
             FlatIntelliJLaf.registerCustomDefaultsSource("petshop.style");
             FlatIntelliJLaf.setup();
-            UIManager.put( "TextComponent.arc", 13 );
+            UIManager.put( "Button.arc", 10 );
+            UIManager.put( "Component.arc", 10 );
+            UIManager.put( "CheckBox.arc", 10 );
+            UIManager.put( "ProgressBar.arc", 10 );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }

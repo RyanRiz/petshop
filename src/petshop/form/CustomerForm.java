@@ -15,6 +15,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import petshop.config.Database;
 
 /**
  *
@@ -368,7 +369,7 @@ public class CustomerForm extends javax.swing.JPanel {
         modal.setVisible(true);
     }//GEN-LAST:event_addButtonMouseClicked
 
-    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {                                    
+    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
         String searchText = textSearch.getText().trim();
         
         // Get the table model and apply a RowSorter to it
@@ -378,7 +379,7 @@ public class CustomerForm extends javax.swing.JPanel {
         // Add a RowFilter based on the search text
         RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
         rowSorter.setRowFilter(rowFilter);
-    }//GEN-LAST:event_textSearchKeyTyped
+    }//GEN-LAST:event_textSearchKeyTyped                                                                                                    
 
     private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {
         int selectedRow = customerTable.getSelectedRow();
@@ -404,7 +405,7 @@ public class CustomerForm extends javax.swing.JPanel {
     
                     if (rowsAffected > 0) {
                         showNotification("Customer deleted successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-                        setTableData();
+                        refreshTable();
                     } else {
                         showNotification("Failed to delete customer", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
                     }
@@ -425,8 +426,8 @@ public class CustomerForm extends javax.swing.JPanel {
             String name = (String) customerTable.getValueAt(selectedRow, 1);
             String phone = (String) customerTable.getValueAt(selectedRow, 2);
             String gender = (String) customerTable.getValueAt(selectedRow, 3);
-            String city = (String) customerTable.getValueAt(selectedRow, 4);
-            String address = (String) customerTable.getValueAt(selectedRow, 5);
+            String address = (String) customerTable.getValueAt(selectedRow, 4);
+            String city = (String) customerTable.getValueAt(selectedRow, 5);
     
             // Open CustomerEditModal and pass the data, including the ID
             CustomerEditModal editModal = new CustomerEditModal(CustomerForm.this, id, name, phone, gender, city, address);

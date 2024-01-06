@@ -629,7 +629,10 @@ public class Main extends javax.swing.JFrame {
         try {
             FlatIntelliJLaf.registerCustomDefaultsSource("petshop.style");
             FlatIntelliJLaf.setup();
-            UIManager.put( "TextComponent.arc", 20 );
+            UIManager.put( "Button.arc", 10 );
+            UIManager.put( "Component.arc", 10 );
+            UIManager.put( "CheckBox.arc", 10 );
+            UIManager.put( "ProgressBar.arc", 10 );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }

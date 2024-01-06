@@ -47,6 +47,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
         addDraggableMouseListener();
         centerFrameOnScreen();
         setFieldData();
+        setGenderComboBox();
     }
 
     public void setFieldData(){
@@ -55,7 +56,22 @@ public class CustomerEditModal extends javax.swing.JFrame {
         textPhone.setText(phone);
         textCity.setText(city);
         areaAddress.setText(address);
-        comboGender.setSelectedItem(gender);
+    }
+
+    private void setGenderComboBox() {
+        // Clear existing items
+        comboGender.removeAllItems();
+    
+        // Add gender options
+        comboGender.addItem("Laki-Laki");
+        comboGender.addItem("Perempuan");
+
+        // Set the selected item based on the provided gender value
+        if ("Laki-Laki".equals(gender)) {
+            comboGender.setSelectedItem("Laki-Laki");
+        } else if ("Perempuan".equals(gender)) {
+            comboGender.setSelectedItem("Perempuan");
+        }
     }
 
     private void resetForm() {
@@ -332,7 +348,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
                 return; // Cancel the operation if any field is null or empty
             }
     
-            String sql = "UPDATE customers SET name=?, phone=?, gender=?, city=?, address=?, updated_at=NOW() WHERE id=?";
+            String sql = "UPDATE customers SET name=?, phone=?, gender=?, address=?, city=?, updated_at=NOW() WHERE id=?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     
@@ -340,8 +356,8 @@ public class CustomerEditModal extends javax.swing.JFrame {
             pst.setString(1, name);
             pst.setString(2, phone);
             pst.setString(3, gender);
-            pst.setString(4, city);
-            pst.setString(5, address);
+            pst.setString(4, address);
+            pst.setString(5, city);
             pst.setInt(6, id); // Assuming 'id' is the customer ID obtained during initialization
     
             int rowsAffected = pst.executeUpdate();
@@ -374,7 +390,10 @@ public class CustomerEditModal extends javax.swing.JFrame {
         try {
             FlatIntelliJLaf.registerCustomDefaultsSource("petshop.style");
             FlatIntelliJLaf.setup();
-            UIManager.put( "TextComponent.arc", 13 );
+            UIManager.put( "Button.arc", 10 );
+            UIManager.put( "Component.arc", 10 );
+            UIManager.put( "CheckBox.arc", 10 );
+            UIManager.put( "ProgressBar.arc", 10 );
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }

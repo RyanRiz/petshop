@@ -6,6 +6,12 @@ package petshop.form;
 
 import java.awt.Cursor;
 
+import javax.swing.table.DefaultTableModel;
+
+import petshop.component.PetInsertModal;
+import raven.toast.Notifications;
+
+
 /**
  *
  * @author Ryan Rizky
@@ -21,6 +27,49 @@ public class PetForm extends javax.swing.JPanel {
         addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        setTableData();
+    }
+
+    public void setTableData(){
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Nama Hewan");
+        model.addColumn("Jenis Hewan");
+        model.addColumn("Warna Hewan");
+        model.addColumn("Umur Hewan");
+        model.addColumn("Deskripsi Hewan");
+        model.addColumn("Nama Pemilik");
+
+        try {
+            String sql = "SELECT p.id, p.name, p.breed, p.color, p.age, p.description, c.name FROM pets as p JOIN customers as c ON p.customer_id = c.id";
+            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+
+            while(res.next()){
+                model.addRow(new Object[]{
+                    res.getString("p.id"),
+                    res.getString("p.name"),
+                    res.getString("p.breed"),
+                    res.getString("p.color"),
+                    res.getInt("p.age"),
+                    res.getString("p.description"),
+                    res.getString("c.name")
+                });
+            }
+            jTable1.setModel(model);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    public void refreshTable() {
+        setTableData();
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     /**
@@ -192,6 +241,9 @@ public class PetForm extends javax.swing.JPanel {
         addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setPreferredSize(new java.awt.Dimension(145, 51));
         addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addButtonMouseEntered(evt);
             }
@@ -294,6 +346,11 @@ public class PetForm extends javax.swing.JPanel {
     private void deleteButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseExited
         deleteButton.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_deleteButtonMouseExited
+
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        PetInsertModal petInsertModal = new PetInsertModal(this);
+        petInsertModal.setVisible(true);
+    }//GEN-LAST:event_addButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
