@@ -50,7 +50,7 @@ public class PetInsertModal extends javax.swing.JFrame {
         try {
             comboCustomer.removeAllItems();
 
-            String sql = "SELECT id, name FROM customers";
+            String sql = "SELECT name FROM customers";
             java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
@@ -328,13 +328,12 @@ public class PetInsertModal extends javax.swing.JFrame {
 
             if (res.next()) {
                 customerId = res.getInt("id");
-            }
-            else {
+            } else {
                 petForm.showNotification("Customer not found.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
                 return;
             }
 
-            if(petName.isEmpty() || breed.isEmpty() || color.isEmpty() || description.isEmpty()){
+            if(petName.isEmpty() || breed.isEmpty() || color.isEmpty()){
                 petForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
                 return;
             }
