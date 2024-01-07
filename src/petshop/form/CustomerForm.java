@@ -4,6 +4,7 @@
  */
 package petshop.form;
 
+import java.awt.BorderLayout;
 import java.awt.Cursor;
 
 import petshop.component.CustomerEditModal;

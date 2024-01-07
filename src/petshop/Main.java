@@ -90,7 +90,7 @@ public class Main extends javax.swing.JFrame {
         mainIcon1.setBackground(new java.awt.Color(255, 255, 255));
         mainIcon1.setPreferredSize(new java.awt.Dimension(60, 60));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/paw-custom (1).png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/petshop-40.png"))); // NOI18N
 
         javax.swing.GroupLayout mainIcon1Layout = new javax.swing.GroupLayout(mainIcon1);
         mainIcon1.setLayout(mainIcon1Layout);
@@ -171,7 +171,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"))); // NOI18N
 
         javax.swing.GroupLayout petCareIconLayout = new javax.swing.GroupLayout(petCareIcon);
         petCareIcon.setLayout(petCareIconLayout);
@@ -198,7 +198,7 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"))); // NOI18N
 
         javax.swing.GroupLayout transactionIconLayout = new javax.swing.GroupLayout(transactionIcon);
         transactionIcon.setLayout(transactionIconLayout);
@@ -358,8 +358,8 @@ public class Main extends javax.swing.JFrame {
         ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-custom.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
-        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"));
-        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"));
+        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
+        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
@@ -404,8 +404,8 @@ public class Main extends javax.swing.JFrame {
         ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-custom.png"));
         ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
-        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"));
-        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"));
+        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
+        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
@@ -447,11 +447,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_userIconMouseClicked
 
     private void petCareIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petCareIconMouseClicked
-        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-custom.png"));
-        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"));
+        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-custom-40.png"));
+        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
-        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"));
+        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
@@ -493,11 +493,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_petCareIconMouseClicked
 
     private void transactionIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionIconMouseClicked
-        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-custom.png"));
-        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"));
+        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-custom-40.png"));
+        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
-        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"));
+        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
@@ -537,8 +537,8 @@ public class Main extends javax.swing.JFrame {
         ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
-        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"));
-        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"));
+        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
+        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
         if (memberIconClicked) {
@@ -583,8 +583,8 @@ public class Main extends javax.swing.JFrame {
         ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
-        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/home-variant-normal.png"));
-        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/point-of-sale-normal.png"));
+        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
+        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
 
         if (settingIconClicked) {

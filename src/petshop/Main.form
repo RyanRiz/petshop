@@ -127,7 +127,7 @@
             <Component class="javax.swing.JLabel" name="jLabel2">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/petshop/icon/paw-custom (1).png"/>
+                  <Image iconType="3" name="/petshop/icon/petshop-40.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -256,7 +256,7 @@
             <Component class="javax.swing.JLabel" name="jLabel8">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/petshop/icon/home-variant-normal.png"/>
+                  <Image iconType="3" name="/petshop/icon/paw-normal-40.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -299,7 +299,7 @@
             <Component class="javax.swing.JLabel" name="jLabel9">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/petshop/icon/point-of-sale-normal.png"/>
+                  <Image iconType="3" name="/petshop/icon/pet-friendly-normal-40.png"/>
                 </Property>
               </Properties>
             </Component>

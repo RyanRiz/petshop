@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import raven.toast.Notifications;
+
 /**
  *
  * @author Ryan Rizky
@@ -22,7 +24,7 @@ public class Database {
             DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
             mysqlconfig = DriverManager.getConnection(url, user, pass);
         } catch (SQLException e){
-            System.out.println("Koneksi ke Database Gagal " + e.getMessage());
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT, "Failed to connect to database");
         }
         return mysqlconfig;
     }
