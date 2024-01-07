@@ -4,6 +4,9 @@
  */
 package petshop.form;
 
+import petshop.config.Database;
+import raven.toast.Notifications;
+
 /**
  *
  * @author Ryan Rizky
@@ -15,6 +18,71 @@ public class DashboardForm extends javax.swing.JPanel {
      */
     public DashboardForm() {
         initComponents();
+
+        setCustomerData();
+        setPetData();
+        setMembershipData();
+        setPetCareData();
+    }
+
+    public void setCustomerData(){
+        try{
+            String sql = "SELECT COUNT(*) FROM customers";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                totalCustomers.setText(rs.getString(1));
+            }
+        } catch(Exception e){
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    public void setPetData(){
+        try{
+            String sql = "SELECT COUNT(*) FROM pets";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                totalPets.setText(rs.getString(1));
+            }
+        } catch(Exception e){
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    public void setMembershipData(){
+        try{
+            String sql = "SELECT COUNT(*) FROM memberships";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                totalMemberships.setText(rs.getString(1));
+            }
+        } catch(Exception e){
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    public void setPetCareData(){
+        try{
+            String sql = "SELECT COUNT(*) FROM petcares";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet rs = pst.executeQuery();
+            if(rs.next()){
+                totalPetCares.setText(rs.getString(1));
+            }
+        } catch(Exception e){
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     /**
@@ -31,18 +99,18 @@ public class DashboardForm extends javax.swing.JPanel {
         panelRounded2 = new petshop.custom.PanelRounded();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        totalCustomers = new javax.swing.JLabel();
         panelRounded3 = new petshop.custom.PanelRounded();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        totalPets = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         panelRounded4 = new petshop.custom.PanelRounded();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        totalMemberships = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         panelRounded5 = new petshop.custom.PanelRounded();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        totalPetCares = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(238, 240, 244));
@@ -62,9 +130,9 @@ public class DashboardForm extends javax.swing.JPanel {
         jLabel3.setForeground(new java.awt.Color(57, 62, 89));
         jLabel3.setText("Customers");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel4.setText("999");
+        totalCustomers.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
+        totalCustomers.setForeground(new java.awt.Color(57, 62, 89));
+        totalCustomers.setText("999");
 
         javax.swing.GroupLayout panelRounded2Layout = new javax.swing.GroupLayout(panelRounded2);
         panelRounded2.setLayout(panelRounded2Layout);
@@ -77,7 +145,7 @@ public class DashboardForm extends javax.swing.JPanel {
                         .addComponent(jLabel3)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panelRounded2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(totalCustomers)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 486, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(20, 20, 20))))
@@ -91,7 +159,7 @@ public class DashboardForm extends javax.swing.JPanel {
                     .addGroup(panelRounded2Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel4)))
+                        .addComponent(totalCustomers)))
                 .addGap(20, 20, 20))
         );
 
@@ -103,9 +171,9 @@ public class DashboardForm extends javax.swing.JPanel {
         jLabel8.setForeground(new java.awt.Color(57, 62, 89));
         jLabel8.setText("Pets");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel9.setText("999");
+        totalPets.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
+        totalPets.setForeground(new java.awt.Color(57, 62, 89));
+        totalPets.setText("999");
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/paw-65.png"))); // NOI18N
 
@@ -120,7 +188,7 @@ public class DashboardForm extends javax.swing.JPanel {
                         .addComponent(jLabel8)
                         .addContainerGap(590, Short.MAX_VALUE))
                     .addGroup(panelRounded3Layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addComponent(totalPets)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel10)
                         .addGap(20, 20, 20))))
@@ -134,7 +202,7 @@ public class DashboardForm extends javax.swing.JPanel {
                     .addGroup(panelRounded3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel9)))
+                        .addComponent(totalPets)))
                 .addGap(20, 20, 20))
         );
 
@@ -146,9 +214,9 @@ public class DashboardForm extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(57, 62, 89));
         jLabel5.setText("Memberships");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel6.setText("999");
+        totalMemberships.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
+        totalMemberships.setForeground(new java.awt.Color(57, 62, 89));
+        totalMemberships.setText("999");
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/card-account-details-65.png"))); // NOI18N
 
@@ -163,7 +231,7 @@ public class DashboardForm extends javax.swing.JPanel {
                         .addComponent(jLabel5)
                         .addContainerGap(458, Short.MAX_VALUE))
                     .addGroup(panelRounded4Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
+                        .addComponent(totalMemberships)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel7)
                         .addGap(20, 20, 20))))
@@ -177,7 +245,7 @@ public class DashboardForm extends javax.swing.JPanel {
                     .addGroup(panelRounded4Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel6)))
+                        .addComponent(totalMemberships)))
                 .addGap(20, 20, 20))
         );
 
@@ -187,11 +255,11 @@ public class DashboardForm extends javax.swing.JPanel {
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel11.setText("Pets Care");
+        jLabel11.setText("Pet Cares");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel12.setText("999");
+        totalPetCares.setFont(new java.awt.Font("Segoe UI", 1, 45)); // NOI18N
+        totalPetCares.setForeground(new java.awt.Color(57, 62, 89));
+        totalPetCares.setText("999");
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/pet-friendly2-65.png"))); // NOI18N
 
@@ -206,7 +274,7 @@ public class DashboardForm extends javax.swing.JPanel {
                         .addComponent(jLabel11)
                         .addContainerGap(519, Short.MAX_VALUE))
                     .addGroup(panelRounded5Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
+                        .addComponent(totalPetCares)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel13)
                         .addGap(20, 20, 20))))
@@ -220,7 +288,7 @@ public class DashboardForm extends javax.swing.JPanel {
                     .addGroup(panelRounded5Layout.createSequentialGroup()
                         .addComponent(jLabel11)
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel12)))
+                        .addComponent(totalPetCares)))
                 .addGap(20, 20, 20))
         );
 
@@ -257,19 +325,19 @@ public class DashboardForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private petshop.custom.PanelRounded panelRounded2;
     private petshop.custom.PanelRounded panelRounded3;
     private petshop.custom.PanelRounded panelRounded4;
     private petshop.custom.PanelRounded panelRounded5;
+    private javax.swing.JLabel totalCustomers;
+    private javax.swing.JLabel totalMemberships;
+    private javax.swing.JLabel totalPetCares;
+    private javax.swing.JLabel totalPets;
     // End of variables declaration//GEN-END:variables
 }

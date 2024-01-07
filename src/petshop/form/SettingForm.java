@@ -79,7 +79,7 @@ public class SettingForm extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel2.setText("Price");
+        jLabel2.setText("Membership Price");
 
         textPrice.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -100,11 +100,11 @@ public class SettingForm extends javax.swing.JPanel {
                 .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelRounded1Layout.createSequentialGroup()
                         .addGap(509, 509, 509)
-                        .addComponent(buttonPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(buttonPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addComponent(textPrice, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(560, 560, 560))
-                    .addComponent(textPrice, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(20, 20, 20))
         );
         panelRounded1Layout.setVerticalGroup(
