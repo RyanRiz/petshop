@@ -12,6 +12,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 import petshop.component.PetEditModal;
 import petshop.component.PetInsertModal;
 import raven.toast.Notifications;
@@ -35,6 +37,8 @@ public class PetForm extends javax.swing.JPanel {
         deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         setTableData();
+
+        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
     }
 
     public void setTableData(){

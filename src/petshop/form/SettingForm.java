@@ -20,6 +20,7 @@ public class SettingForm extends javax.swing.JPanel {
         initComponents();
 
         setField();
+        setAccount();
     }
 
     public void setField() {
@@ -36,6 +37,26 @@ public class SettingForm extends javax.swing.JPanel {
                 discount = res.getString("discount");
                 textPrice.setText(price);
                 textDiscount.setText(discount);
+            }
+        } catch (Exception e) {
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    public void setAccount() {
+        String username = "";
+        String password = "";
+        try {
+            String sql = "SELECT * FROM users WHERE id = 1";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.Statement stm = conn.createStatement();
+            java.sql.ResultSet res = stm.executeQuery(sql);
+
+            while(res.next()){
+                username = res.getString("username");
+                password = res.getString("password");
+                textUsername.setText(username);
+                textPassword.setText(password);
             }
         } catch (Exception e) {
             showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
@@ -65,6 +86,11 @@ public class SettingForm extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         textDiscount = new javax.swing.JTextField();
         buttonDiscount = new javax.swing.JButton();
+        panelRounded3 = new petshop.custom.PanelRounded();
+        jLabel4 = new javax.swing.JLabel();
+        textUsername = new javax.swing.JTextField();
+        textPassword = new javax.swing.JPasswordField();
+        buttonUpdate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(238, 240, 244));
 
@@ -167,16 +193,69 @@ public class SettingForm extends javax.swing.JPanel {
 
         jPanel1.add(panelRounded2);
 
+        panelRounded3.setBackground(new java.awt.Color(255, 255, 255));
+        panelRounded3.setPreferredSize(new java.awt.Dimension(669, 248));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(57, 62, 89));
+        jLabel4.setText("Account");
+
+        textUsername.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        buttonUpdate.setText("Update");
+        buttonUpdate.setFocusable(false);
+        buttonUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonUpdateActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelRounded3Layout = new javax.swing.GroupLayout(panelRounded3);
+        panelRounded3.setLayout(panelRounded3Layout);
+        panelRounded3Layout.setHorizontalGroup(
+            panelRounded3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRounded3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(panelRounded3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(textPassword)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded3Layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                        .addGap(505, 505, 505))
+                    .addComponent(textUsername, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelRounded3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(buttonUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
+        );
+        panelRounded3Layout.setVerticalGroup(
+            panelRounded3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRounded3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(textUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonUpdate, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addGap(23, 23, 23))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(20, 20, 20))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelRounded3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,7 +264,9 @@ public class SettingForm extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(428, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(panelRounded3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -215,17 +296,37 @@ public class SettingForm extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_buttonDiscountActionPerformed
 
+    private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
+        String username = textUsername.getText();
+        String password = textPassword.getText();
+
+        try {
+            String sql = "UPDATE users SET username = '"+username+"', password = '"+password+"' WHERE id = 1";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.execute();
+            showNotification("Account updated!", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+        } catch (Exception e) {
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }//GEN-LAST:event_buttonUpdateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonDiscount;
     private javax.swing.JButton buttonPrice;
+    private javax.swing.JButton buttonUpdate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private petshop.custom.PanelRounded panelRounded1;
     private petshop.custom.PanelRounded panelRounded2;
+    private petshop.custom.PanelRounded panelRounded3;
     private javax.swing.JTextField textDiscount;
+    private javax.swing.JPasswordField textPassword;
     private javax.swing.JTextField textPrice;
+    private javax.swing.JTextField textUsername;
     // End of variables declaration//GEN-END:variables
 }

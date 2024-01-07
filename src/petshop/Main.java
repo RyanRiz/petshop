@@ -11,7 +11,6 @@ import petshop.form.MembershipForm;
 import petshop.form.PetForm;
 import petshop.form.SettingForm;
 import raven.toast.Notifications;
-import petshop.component.CustomerInsertModal;
 import petshop.form.CustomerForm;
 
 import java.awt.Color;
@@ -82,6 +81,8 @@ public class Main extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         bodyPanel = new javax.swing.JPanel();
         NavBar = new javax.swing.JPanel();
+        logoutIcon = new petshop.custom.PanelRounded();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -313,15 +314,54 @@ public class Main extends javax.swing.JFrame {
         NavBar.setBackground(new java.awt.Color(255, 255, 255));
         NavBar.setPreferredSize(new java.awt.Dimension(100, 66));
 
+        logoutIcon.setBackground(new java.awt.Color(255, 255, 255));
+        logoutIcon.setPreferredSize(new java.awt.Dimension(50, 50));
+        logoutIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutIconMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutIconMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutIconMouseExited(evt);
+            }
+        });
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/logout-normal.png"))); // NOI18N
+
+        javax.swing.GroupLayout logoutIconLayout = new javax.swing.GroupLayout(logoutIcon);
+        logoutIcon.setLayout(logoutIconLayout);
+        logoutIconLayout.setHorizontalGroup(
+            logoutIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutIconLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGap(10, 10, 10))
+        );
+        logoutIconLayout.setVerticalGroup(
+            logoutIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutIconLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel1)
+                .addGap(10, 10, 10))
+        );
+
         javax.swing.GroupLayout NavBarLayout = new javax.swing.GroupLayout(NavBar);
         NavBar.setLayout(NavBarLayout);
         NavBarLayout.setHorizontalGroup(
             NavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NavBarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(logoutIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         NavBarLayout.setVerticalGroup(
             NavBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 66, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NavBarLayout.createSequentialGroup()
+                .addGap(8, 8, 8)
+                .addComponent(logoutIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -624,6 +664,22 @@ public class Main extends javax.swing.JFrame {
         bodyPanel.repaint();
     }//GEN-LAST:event_settingIconMouseClicked
 
+    private void logoutIconMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseEntered
+        logoutIcon.setBackground(new Color(239,246,255));
+    }//GEN-LAST:event_logoutIconMouseEntered
+
+    private void logoutIconMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseExited
+       logoutIcon.setBackground(new Color(255,255,255));
+    }//GEN-LAST:event_logoutIconMouseExited
+
+    private void close() {
+        this.dispose();
+    }
+
+    private void logoutIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseClicked
+        close();
+    }//GEN-LAST:event_logoutIconMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -658,6 +714,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel SideBar;
     private javax.swing.JPanel bodyPanel;
     private petshop.custom.PanelRounded dashboardIcon;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -665,6 +722,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private petshop.custom.PanelRounded logoutIcon;
     private javax.swing.JPanel mainIcon1;
     private petshop.custom.PanelRounded memberIcon;
     private petshop.custom.PanelRounded petCareIcon;

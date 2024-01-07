@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Jan 2024 pada 18.33
+-- Waktu pembuatan: 07 Jan 2024 pada 13.14
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -63,7 +63,7 @@ CREATE TABLE `memberships` (
 CREATE TABLE `membership_transactions` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `membership_id` bigint(20) UNSIGNED NOT NULL,
-  `months` int(11) NOT NULL COMMENT '1 month = 1',
+  `months` int(11) NOT NULL,
   `subtotal` int(11) NOT NULL,
   `discount` int(11) NOT NULL,
   `total` bigint(20) NOT NULL,
@@ -163,17 +163,18 @@ INSERT INTO `settings` (`id`, `price`, `discount`, `created_at`, `updated_at`) V
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `birthday` date DEFAULT NULL,
-  `address` varchar(255) NOT NULL,
-  `gender` tinyint(1) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `phone` char(15) DEFAULT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`) VALUES
+(1, 'admin', 'admin', '2024-01-07 10:36:35', '2024-01-07 10:36:35');
 
 --
 -- Indexes for dumped tables
@@ -283,7 +284,7 @@ ALTER TABLE `settings`
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

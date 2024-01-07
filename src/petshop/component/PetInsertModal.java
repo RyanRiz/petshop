@@ -359,7 +359,7 @@ public class PetInsertModal extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void close() {
-        this.dispose(); // Close the customer modal
+        this.dispose();
     }
 
     /**
