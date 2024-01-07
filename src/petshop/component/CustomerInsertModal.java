@@ -6,6 +6,7 @@ package petshop.component;
 
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 
 import petshop.config.Database;
@@ -34,6 +35,13 @@ public class CustomerInsertModal extends javax.swing.JFrame {
         addDraggableMouseListener();
         centerFrameOnScreen();
         setGenderComboBox();
+        setPlaceholder();
+    }
+
+    private void setPlaceholder() {
+        textName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nama");
+        textPhone.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "No. Telepon");
+        textCity.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Kota");
     }
 
     private void setGenderComboBox() {

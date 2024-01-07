@@ -7,6 +7,8 @@ package petshop.component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import com.formdev.flatlaf.FlatClientProperties;
+
 import petshop.config.Database;
 import petshop.form.PetForm;
 import raven.toast.Notifications;
@@ -21,6 +23,7 @@ public class PetEditModal extends javax.swing.JFrame {
 
     private PetForm petForm;
     private int mouseX, mouseY;
+    private String id, name, breed, color, age, description, customerName;
     /**
      * Creates new form PetEditModal
      */
@@ -31,7 +34,15 @@ public class PetEditModal extends javax.swing.JFrame {
         addDraggableMouseListener();
         centerFrameOnScreen();
         setComboCustomer();
-        setFieldData(id, name, breed, color, age, description, customerName);
+        setFieldData();
+        setPlaceholder();
+    }
+
+    private void setPlaceholder() {
+        textPetName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nama Hewan");
+        textBreed.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Jenis Hewan");
+        textColor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Warna Hewan");
+        textAge.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Umur Hewan");
     }
 
     public void resetForm() {
@@ -43,7 +54,7 @@ public class PetEditModal extends javax.swing.JFrame {
         comboCustomer.setSelectedIndex(0);
     }
 
-    public void setFieldData(String id, String name, String breed, String color, String age, String description, String customerName) {
+    public void setFieldData() {
         textID.setText(id);
         textPetName.setText(name);
         textBreed.setText(breed);
@@ -160,7 +171,7 @@ public class PetEditModal extends javax.swing.JFrame {
         jLabel4.setText("Warna Hewan");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Umur Hewan");
+        jLabel5.setText("Umur Hewan (Bulan)");
 
         areaDescription.setColumns(20);
         areaDescription.setRows(5);
@@ -202,10 +213,10 @@ public class PetEditModal extends javax.swing.JFrame {
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
                                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGap(105, 105, 105))
+                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
-                                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addGap(110, 110, 110))
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                         .addGap(86, 86, 86))
                                     .addGroup(panelRounded1Layout.createSequentialGroup()
                                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

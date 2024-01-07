@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.UIManager;
 
+import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 
 import petshop.config.Database;
@@ -36,6 +37,14 @@ public class PetInsertModal extends javax.swing.JFrame {
         centerFrameOnScreen();
         addDraggableMouseListener();
         setComboCustomer();
+        setPlaceholder();
+    }
+
+    private void setPlaceholder() {
+        textPetName.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Nama Hewan");
+        textBreed.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Jenis Hewan");
+        textColor.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Warna Hewan");
+        textAge.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Umur Hewan");
     }
 
     private void resetForm() {
@@ -52,7 +61,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             comboCustomer.removeAllItems();
 
             String sql = "SELECT name FROM customers";
-            java.sql.Connection conn = (java.sql.Connection) petshop.config.Database.configDB();
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
             java.sql.ResultSet res = pst.executeQuery();
@@ -152,7 +161,7 @@ public class PetInsertModal extends javax.swing.JFrame {
         jLabel4.setText("Warna Hewan");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("Umur Hewan");
+        jLabel5.setText("Umur Hewan (Bulan)");
 
         areaDescription.setColumns(20);
         areaDescription.setRows(5);
@@ -180,10 +189,10 @@ public class PetInsertModal extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(105, 105, 105))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(110, 110, 110))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(106, 106, 106))
                     .addGroup(panelRounded1Layout.createSequentialGroup()
                         .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -348,7 +357,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             e.printStackTrace();
             petForm.showNotification("An error occurred. Please check the console for details.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
         }
-    }//GEN-LAST:event_buttonAddActionPerformed
+    }                                         
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         resetForm();

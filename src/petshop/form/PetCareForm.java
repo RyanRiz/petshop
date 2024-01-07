@@ -4,23 +4,77 @@
  */
 package petshop.form;
 
+import javax.swing.table.DefaultTableModel;
+
+import com.formdev.flatlaf.FlatClientProperties;
+
+import petshop.component.PetCareInsertModal;
+import petshop.config.Database;
+import raven.toast.Notifications;
 import java.awt.Cursor;
 
 /**
  *
  * @author Ryan Rizky
  */
-public class MembershipForm extends javax.swing.JPanel {
+public class PetCareForm extends javax.swing.JPanel {
 
     /**
-     * Creates new form MembershipForm
+     * Creates new form PetCareForm
      */
-    public MembershipForm() {
+    public PetCareForm() {
         initComponents();
-
         addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
+
+        setTableData();
+    }
+
+    public void refreshTable() {
+        setTableData();
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
+    }
+
+    private void setTableData() {
+        DefaultTableModel model = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        model.addColumn("ID");
+        model.addColumn("Customer");
+        model.addColumn("Pet");
+        model.addColumn("Check-In");
+        model.addColumn("Check-Out");
+        model.addColumn("Status");
+
+        try{
+            String sql = "SELECT * FROM petcares join customers on petcares.customer_id = customers.id join pets on petcares.pet_id = pets.id";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            java.sql.ResultSet res = pst.executeQuery();
+
+            while (res.next()){
+                model.addRow(new Object[]{
+                    res.getString("id"),
+                    res.getString("customer.name"),
+                    res.getString("pet.name"),
+                    res.getString("date_in"),
+                    res.getString("date_out"),
+                    res.getString("status")
+                });
+            }
+            petCareTable.setModel(model);
+        } catch (Exception e) {
+            Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT, e.getMessage());
+        }
     }
 
     /**
@@ -34,10 +88,10 @@ public class MembershipForm extends javax.swing.JPanel {
 
         panelRounded1 = new petshop.custom.PanelRounded();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        searchBar = new petshop.custom.PanelRounded();
+        petCareTable = new javax.swing.JTable();
+        searchPanel = new petshop.custom.PanelRounded();
         jLabel10 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        textSearch = new javax.swing.JTextField();
         deleteButton = new petshop.custom.PanelRounded();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -53,7 +107,7 @@ public class MembershipForm extends javax.swing.JPanel {
 
         panelRounded1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        petCareTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,7 +118,8 @@ public class MembershipForm extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        petCareTable.setFocusable(false);
+        jScrollPane1.setViewportView(petCareTable);
 
         javax.swing.GroupLayout panelRounded1Layout = new javax.swing.GroupLayout(panelRounded1);
         panelRounded1.setLayout(panelRounded1Layout);
@@ -83,33 +138,39 @@ public class MembershipForm extends javax.swing.JPanel {
                 .addGap(20, 20, 20))
         );
 
-        searchBar.setBackground(new java.awt.Color(255, 255, 255));
-        searchBar.setPreferredSize(new java.awt.Dimension(145, 51));
+        searchPanel.setBackground(new java.awt.Color(255, 255, 255));
+        searchPanel.setPreferredSize(new java.awt.Dimension(145, 51));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/magnify.png"))); // NOI18N
 
-        jTextField1.setToolTipText("");
-        jTextField1.setBorder(null);
-        jTextField1.setHighlighter(null);
+        textSearch.setToolTipText("");
+        textSearch.setBorder(null);
+        textSearch.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        textSearch.setHighlighter(null);
+        textSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textSearchKeyTyped(evt);
+            }
+        });
 
-        javax.swing.GroupLayout searchBarLayout = new javax.swing.GroupLayout(searchBar);
-        searchBar.setLayout(searchBarLayout);
-        searchBarLayout.setHorizontalGroup(
-            searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchBarLayout.createSequentialGroup()
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                .addComponent(textSearch, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
                 .addGap(20, 20, 20))
         );
-        searchBarLayout.setVerticalGroup(
-            searchBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(searchBarLayout.createSequentialGroup()
+        searchPanelLayout.setVerticalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(searchPanelLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel10)
                 .addContainerGap(13, Short.MAX_VALUE))
-            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(textSearch, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         deleteButton.setBackground(new java.awt.Color(255, 255, 255));
@@ -191,6 +252,9 @@ public class MembershipForm extends javax.swing.JPanel {
         addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setPreferredSize(new java.awt.Dimension(145, 51));
         addButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 addButtonMouseEntered(evt);
             }
@@ -228,7 +292,7 @@ public class MembershipForm extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel1.setText("Membership");
+        jLabel1.setText("Pet Care");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -250,7 +314,7 @@ public class MembershipForm extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
@@ -263,12 +327,22 @@ public class MembershipForm extends javax.swing.JPanel {
                     .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                    .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(searchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panelRounded1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
+        // String searchText = textSearch.getText().trim();
+
+        // TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(petTable.getModel());
+        // petTable.setRowSorter(rowSorter);
+
+        // RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
+        // rowSorter.setRowFilter(rowFilter);
+    }//GEN-LAST:event_textSearchKeyTyped
 
     private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
         deleteButton.setBackground(new java.awt.Color(250, 250, 250));
@@ -294,6 +368,11 @@ public class MembershipForm extends javax.swing.JPanel {
         addButton.setBackground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_addButtonMouseExited
 
+    private void addButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addButtonMouseClicked
+        PetCareInsertModal petCareInsertModal = new PetCareInsertModal(this);
+        petCareInsertModal.setVisible(true);
+    }//GEN-LAST:event_addButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private petshop.custom.PanelRounded addButton;
@@ -308,9 +387,9 @@ public class MembershipForm extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private petshop.custom.PanelRounded panelRounded1;
-    private petshop.custom.PanelRounded searchBar;
+    private javax.swing.JTable petCareTable;
+    private petshop.custom.PanelRounded searchPanel;
+    private javax.swing.JTextField textSearch;
     // End of variables declaration//GEN-END:variables
 }

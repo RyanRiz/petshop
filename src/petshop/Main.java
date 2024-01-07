@@ -7,7 +7,7 @@ package petshop;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 
 import petshop.form.DashboardForm;
-import petshop.form.MembershipForm;
+import petshop.form.PetCareForm;
 import petshop.form.PetForm;
 import petshop.form.SettingForm;
 import raven.toast.Notifications;
@@ -75,8 +75,6 @@ public class Main extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         transactionIcon = new petshop.custom.PanelRounded();
         jLabel9 = new javax.swing.JLabel();
-        memberIcon = new petshop.custom.PanelRounded();
-        jLabel10 = new javax.swing.JLabel();
         settingIcon = new petshop.custom.PanelRounded();
         jLabel11 = new javax.swing.JLabel();
         bodyPanel = new javax.swing.JPanel();
@@ -218,33 +216,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        memberIcon.setBackground(new java.awt.Color(255, 255, 255));
-        memberIcon.setMinimumSize(new java.awt.Dimension(60, 60));
-        memberIcon.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                memberIconMouseClicked(evt);
-            }
-        });
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"))); // NOI18N
-
-        javax.swing.GroupLayout memberIconLayout = new javax.swing.GroupLayout(memberIcon);
-        memberIcon.setLayout(memberIconLayout);
-        memberIconLayout.setHorizontalGroup(
-            memberIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, memberIconLayout.createSequentialGroup()
-                .addContainerGap(10, Short.MAX_VALUE)
-                .addComponent(jLabel10)
-                .addGap(10, 10, 10))
-        );
-        memberIconLayout.setVerticalGroup(
-            memberIconLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(memberIconLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel10)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
         settingIcon.setBackground(new java.awt.Color(255, 255, 255));
         settingIcon.setMinimumSize(new java.awt.Dimension(60, 60));
         settingIcon.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -280,7 +251,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(20, Short.MAX_VALUE)
                 .addGroup(SideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(settingIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(memberIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(transactionIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(petCareIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -301,8 +271,6 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(petCareIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(transactionIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(memberIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(settingIcon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -391,7 +359,6 @@ public class Main extends javax.swing.JFrame {
     private boolean userIconClicked = false;
     private boolean petCareIconClicked = false;
     private boolean saleIconClicked = false;
-    private boolean memberIconClicked = false;
     private boolean settingIconClicked = false;
 
     private void dashboardIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardIconMouseClicked
@@ -400,7 +367,6 @@ public class Main extends javax.swing.JFrame {
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
-        ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
         if (dashIconClicked) {
@@ -425,10 +391,6 @@ public class Main extends javax.swing.JFrame {
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        memberIconClicked = false;
-        memberIcon.setBackground(new Color(255,255,255));
-        jLabel10.setIcon(memberNormal);
-
         settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
@@ -446,7 +408,6 @@ public class Main extends javax.swing.JFrame {
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
-        ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
         if (userIconClicked) {
@@ -471,10 +432,6 @@ public class Main extends javax.swing.JFrame {
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        memberIconClicked = false;
-        memberIcon.setBackground(new Color(255,255,255));
-        jLabel10.setIcon(memberNormal);
-
         settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
@@ -492,7 +449,6 @@ public class Main extends javax.swing.JFrame {
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
-        ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
         if (petCareIconClicked) {
@@ -517,10 +473,6 @@ public class Main extends javax.swing.JFrame {
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        memberIconClicked = false;
-        memberIcon.setBackground(new Color(255,255,255));
-        jLabel10.setIcon(memberNormal);
-
         settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
@@ -538,7 +490,6 @@ public class Main extends javax.swing.JFrame {
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
-        ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
         if (saleIconClicked) {
@@ -563,60 +514,16 @@ public class Main extends javax.swing.JFrame {
         petCareIcon.setBackground(new Color(255, 255, 255));
         jLabel8.setIcon(petCareNormal);
 
-        memberIconClicked = false;
-        memberIcon.setBackground(new Color(255,255,255));
-        jLabel10.setIcon(memberNormal);
-
-        settingIconClicked = false;
-        settingIcon.setBackground(new Color(255,255,255));
-        jLabel11.setIcon(settingNormal);
-    }//GEN-LAST:event_transactionIconMouseClicked
-
-    private void memberIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memberIconMouseClicked
-        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-custom.png"));
-        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
-        ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
-        ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
-        ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
-        ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
-        ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
-
-        if (memberIconClicked) {
-            memberIconClicked = false;
-            memberIcon.setBackground(new Color(255, 255, 255));
-            jLabel10.setIcon(imageClicked);
-        } else {
-            memberIconClicked = true;
-            memberIcon.setBackground(new Color(239, 246, 255));
-            jLabel10.setIcon(imageNormal);
-        }
-
-        dashIconClicked = false;
-        dashboardIcon.setBackground(new Color(255, 255, 255));
-        jLabel6.setIcon(dashNormal);
-
-        userIconClicked = false;
-        userIcon.setBackground(new Color(255, 255, 255));
-        jLabel7.setIcon(userNormal);
-
-        petCareIconClicked = false;
-        petCareIcon.setBackground(new Color(255, 255, 255));
-        jLabel8.setIcon(petCareNormal);
-
-        saleIconClicked = false;
-        transactionIcon.setBackground(new Color(255,255,255));
-        jLabel9.setIcon(saleNormal);
-
         settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
 
-        MembershipForm memberForm = new MembershipForm();
+        PetCareForm saleForm = new PetCareForm();
         bodyPanel.removeAll();
-        bodyPanel.add(memberForm);
+        bodyPanel.add(saleForm);
         bodyPanel.revalidate();
         bodyPanel.repaint();
-    }//GEN-LAST:event_memberIconMouseClicked
+    }//GEN-LAST:event_transactionIconMouseClicked
 
     private void settingIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingIconMouseClicked
         ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-custom.png"));
@@ -625,7 +532,6 @@ public class Main extends javax.swing.JFrame {
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
-        ImageIcon memberNormal = new ImageIcon(getClass().getResource("/petshop/icon/card-account-details-normal.png"));
 
         if (settingIconClicked) {
             settingIconClicked = false;
@@ -653,10 +559,6 @@ public class Main extends javax.swing.JFrame {
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        memberIconClicked = false;
-        memberIcon.setBackground(new Color(255,255,255));
-        jLabel10.setIcon(memberNormal);
-
         SettingForm settingForm = new SettingForm();
         bodyPanel.removeAll();
         bodyPanel.add(settingForm);
@@ -666,10 +568,12 @@ public class Main extends javax.swing.JFrame {
 
     private void logoutIconMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseEntered
         logoutIcon.setBackground(new Color(239,246,255));
+        jLabel1.setIcon(new ImageIcon(getClass().getResource("/petshop/icon/logout-custom.png")));
     }//GEN-LAST:event_logoutIconMouseEntered
 
     private void logoutIconMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseExited
        logoutIcon.setBackground(new Color(255,255,255));
+         jLabel1.setIcon(new ImageIcon(getClass().getResource("/petshop/icon/logout-normal.png")));
     }//GEN-LAST:event_logoutIconMouseExited
 
     private void close() {
@@ -715,7 +619,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel bodyPanel;
     private petshop.custom.PanelRounded dashboardIcon;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
@@ -724,7 +627,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private petshop.custom.PanelRounded logoutIcon;
     private javax.swing.JPanel mainIcon1;
-    private petshop.custom.PanelRounded memberIcon;
     private petshop.custom.PanelRounded petCareIcon;
     private petshop.custom.PanelRounded settingIcon;
     private petshop.custom.PanelRounded transactionIcon;
