@@ -53,29 +53,37 @@ public class PetCareForm extends javax.swing.JPanel {
         model.addColumn("Pet");
         model.addColumn("Check-In");
         model.addColumn("Check-Out");
+        model.addColumn("Total Bayar");
         model.addColumn("Status");
-
-        try{
-            String sql = "SELECT * FROM petcares join customers on petcares.customer_id = customers.id join pets on petcares.pet_id = pets.id";
+    
+        try {
+            String sql = "SELECT * FROM petcares JOIN customers ON petcares.customer_id = customers.id JOIN pets ON petcares.pet_id = pets.id";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             java.sql.ResultSet res = pst.executeQuery();
-
-            while (res.next()){
+    
+            while (res.next()) {
+                // Convert boolean status to a meaningful string
+                String status = res.getBoolean("status") ? "Done" : "On Progress";
+                
+                // Retrieve an integer from the result set
+                int total = res.getInt("total");
+    
                 model.addRow(new Object[]{
                     res.getString("id"),
-                    res.getString("customer.name"),
-                    res.getString("pet.name"),
+                    res.getString("customers.name"),
+                    res.getString("pets.name"),
                     res.getString("date_in"),
                     res.getString("date_out"),
-                    res.getString("status")
+                    total,
+                    status
                 });
             }
             petCareTable.setModel(model);
         } catch (Exception e) {
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT, e.getMessage());
         }
-    }
+    }       
 
     /**
      * This method is called from within the constructor to initialize the form.

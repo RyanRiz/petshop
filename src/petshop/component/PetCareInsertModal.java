@@ -10,11 +10,10 @@ import raven.toast.Notifications;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-
-import javax.swing.JTextField;
 
 import java.awt.Toolkit;
 
@@ -185,6 +184,7 @@ public class PetCareInsertModal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(238, 240, 244));
+        setUndecorated(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
@@ -371,64 +371,73 @@ public class PetCareInsertModal extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelActionPerformed
 
     private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
-        // try {
-        //     String sql = "INSERT INTO petcares (customer_id, pet_id, date_in, date_out, discount, total, status) VALUES ((SELECT id FROM customers WHERE name = ?), (SELECT id FROM pets WHERE name = ?), ?, ?, ?, ?, ?)";
-        //     java.sql.Connection conn = (java.sql.Connection) Database.configDB();
-        //     java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+        try {
+            String sql = "INSERT INTO petcares (customer_id, pet_id, date_in, date_out, discount, total, status) VALUES ((SELECT id FROM customers WHERE name = ?), (SELECT id FROM pets WHERE name = ?), ?, ?, ?, ?, ?)";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     
-        //     Double discount = 0.0;
-        //     Double total = 0.0;
+            Double discount = 0.0;
+            Double total = 0.0;
+
+            // Convert date to the 'YYYY-MM-DD' format
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
+            String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
     
-        //     // Set values in the prepared statement
-        //     pst.setString(1, comboCustomer.getSelectedItem().toString());
-        //     pst.setString(2, comboPet.getSelectedItem().toString());
-        //     pst.setString(3, ((JTextField) dateCheckIn.getDateEditor().getUiComponent()).getText());
-        //     pst.setString(4, ((JTextField) dateCheckOut.getDateEditor().getUiComponent()).getText());
+            // Set values in the prepared statement
+            pst.setString(1, comboCustomer.getSelectedItem().toString());
+            pst.setString(2, comboPet.getSelectedItem().toString());
+            pst.setString(3, formattedDateIn);
+            pst.setString(4, formattedDateOut);
     
-        //     // Declare resDiscount outside the if block
-        //     java.sql.ResultSet resDiscount = null;
+            // Declare resDiscount outside the if block
+            java.sql.ResultSet resDiscount = null;
     
-        //     // Calculate total days
-        //     LocalDate checkInDate = dateCheckIn.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        //     LocalDate checkOutDate = dateCheckOut.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        //     long totalDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+            // Calculate total days
+            LocalDate checkInDate = dateCheckIn.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate checkOutDate = dateCheckOut.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            long totalDays = ChronoUnit.DAYS.between(checkInDate, checkOutDate);
     
-        //     // Set discount and total values
-        //     if (comboDiscount.getSelectedItem().equals("Ya")) {
-        //         String sqlDiscount = "SELECT discount, price FROM settings WHERE id = 1";
-        //         java.sql.Connection connDiscount = (java.sql.Connection) Database.configDB();
-        //         java.sql.PreparedStatement pstDiscount = connDiscount.prepareStatement(sqlDiscount);
+            // Set discount and total values
+            if (comboDiscount.getSelectedItem().equals("Ya")) {
+                String sqlDiscount = "SELECT discount, price FROM settings WHERE id = 1";
+                java.sql.Connection connDiscount = (java.sql.Connection) Database.configDB();
+                java.sql.PreparedStatement pstDiscount = connDiscount.prepareStatement(sqlDiscount);
     
-        //         resDiscount = pstDiscount.executeQuery();
-        //         if (resDiscount.next()) {
-        //             discount = resDiscount.getDouble("discount");
-        //             total = (discount / 100) * resDiscount.getDouble("price") * totalDays;
-        //             pst.setString(5, Double.toString(discount));
-        //             pst.setString(6, Double.toString(total));
-        //         } else {
-        //             pst.setString(5, "0.0");
-        //             pst.setString(6, "0.0");
-        //         }
-        //     } else {
-        //         pst.setString(5, "0.0");
-        //         if (resDiscount != null) {
-        //             total = resDiscount.getDouble("price") * totalDays;
-        //         }
-        //         pst.setString(6, Double.toString(total));
-        //     }
+                resDiscount = pstDiscount.executeQuery();
+                resDiscount.next();
+                System.out.println(resDiscount.getDouble("discount"));
+                System.out.println(resDiscount.getDouble("price"));
+                discount = resDiscount.getDouble("discount");
+                total = (discount / 100) * resDiscount.getDouble("price") * totalDays;
+                Double subtotal = resDiscount.getDouble("price") - total;
+                pst.setString(5, Double.toString(discount));
+                pst.setString(6, Double.toString(subtotal));
+            } else {
+                String sqlDiscount = "SELECT discount, price FROM settings WHERE id = 1";
+                java.sql.Connection connDiscount = (java.sql.Connection) Database.configDB();
+                java.sql.PreparedStatement pstDiscount = connDiscount.prepareStatement(sqlDiscount);
     
-        //     pst.setString(7, comboStatus.getSelectedItem().toString());
+                resDiscount = pstDiscount.executeQuery();
+                resDiscount.next();
+                pst.setString(5, "0.0");
+                Double subtotal = resDiscount.getDouble("price");
+                pst.setDouble(6, subtotal);
+            }
     
-        //     pst.execute();
+            pst.setInt(7, comboStatus.getSelectedItem().equals("On Progress") ? 0 : 1);
     
-        //     petCareForm.showNotification("Berhasil menambahkan data", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
+            pst.execute();
     
-        //     petCareForm.refreshTable();
+            petCareForm.showNotification("Berhasil menambahkan data", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
     
-        //     close();
-        // } catch (Exception e) {
-        //     petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-        // }
+            petCareForm.refreshTable();
+    
+            close();
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_buttonAddActionPerformed
 
     /**

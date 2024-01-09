@@ -105,7 +105,7 @@ public class SettingForm extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel2.setText("Per Hour Price");
+        jLabel2.setText("Per Day Price");
 
         textPrice.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
