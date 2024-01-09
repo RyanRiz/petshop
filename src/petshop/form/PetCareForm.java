@@ -5,9 +5,13 @@
 package petshop.form;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
 
 import com.formdev.flatlaf.FlatClientProperties;
 
+import petshop.component.PetCareEditModal;
 import petshop.component.PetCareInsertModal;
 import petshop.config.Database;
 import raven.toast.Notifications;
@@ -53,6 +57,7 @@ public class PetCareForm extends javax.swing.JPanel {
         model.addColumn("Pet");
         model.addColumn("Check-In");
         model.addColumn("Check-Out");
+        model.addColumn("Diskon");
         model.addColumn("Total Bayar");
         model.addColumn("Status");
     
@@ -75,6 +80,7 @@ public class PetCareForm extends javax.swing.JPanel {
                     res.getString("pets.name"),
                     res.getString("date_in"),
                     res.getString("date_out"),
+                    res.getString("discount"),
                     total,
                     status
                 });
@@ -184,6 +190,9 @@ public class PetCareForm extends javax.swing.JPanel {
         deleteButton.setBackground(new java.awt.Color(255, 255, 255));
         deleteButton.setPreferredSize(new java.awt.Dimension(145, 51));
         deleteButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 deleteButtonMouseEntered(evt);
             }
@@ -222,6 +231,9 @@ public class PetCareForm extends javax.swing.JPanel {
         editButton.setBackground(new java.awt.Color(255, 255, 255));
         editButton.setPreferredSize(new java.awt.Dimension(110, 51));
         editButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 editButtonMouseEntered(evt);
             }
@@ -343,13 +355,13 @@ public class PetCareForm extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
-        // String searchText = textSearch.getText().trim();
+        String searchText = textSearch.getText().trim();
 
-        // TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(petTable.getModel());
-        // petTable.setRowSorter(rowSorter);
+        TableRowSorter<TableModel> rowSorter = new TableRowSorter<>(petCareTable.getModel());
+        petCareTable.setRowSorter(rowSorter);
 
-        // RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
-        // rowSorter.setRowFilter(rowFilter);
+        RowFilter<TableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + searchText);
+        rowSorter.setRowFilter(rowFilter);
     }//GEN-LAST:event_textSearchKeyTyped
 
     private void deleteButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseEntered
@@ -380,6 +392,49 @@ public class PetCareForm extends javax.swing.JPanel {
         PetCareInsertModal petCareInsertModal = new PetCareInsertModal(this);
         petCareInsertModal.setVisible(true);
     }//GEN-LAST:event_addButtonMouseClicked
+
+    private void editButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editButtonMouseClicked
+        int selectedRow = petCareTable.getSelectedRow();
+
+        if (selectedRow != -1) {
+            String id = petCareTable.getValueAt(selectedRow, 0).toString();
+            String customer = petCareTable.getValueAt(selectedRow, 1).toString();
+            String pet = petCareTable.getValueAt(selectedRow, 2).toString();
+            String dateIn = petCareTable.getValueAt(selectedRow, 3).toString();
+            String dateOut = petCareTable.getValueAt(selectedRow, 4).toString();
+            String discount = petCareTable.getValueAt(selectedRow, 5).toString();
+            String status = petCareTable.getValueAt(selectedRow, 6).toString();
+
+            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, dateIn, dateOut, discount ,status);
+            petCareEditModal.setVisible(true);
+        }else{
+            showNotification("Please select a row to edit.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+        }
+        
+    }//GEN-LAST:event_editButtonMouseClicked
+
+    private void deleteButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteButtonMouseClicked
+        int selectedRow = petCareTable.getSelectedRow();
+
+        if (selectedRow != -1){
+            String id = (String) petCareTable.getValueAt(selectedRow, 0);
+
+            try {
+                String sql = "DELETE FROM petcares WHERE id = ?";
+                java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, id);
+                pst.executeUpdate();
+
+                showNotification("Pet Care data deleted successfully.", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
+                setTableData();
+            } catch (Exception e) {
+                showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            }
+        } else {
+            showNotification("Please select a row to delete.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }//GEN-LAST:event_deleteButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
