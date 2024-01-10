@@ -469,7 +469,7 @@ public class PetCareInsertModal extends javax.swing.JFrame {
         jPanel1.add(textPricePerDay);
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel14.setText("Diskon :");
+        jLabel14.setText("Diskon (Persen) :");
         jPanel1.add(jLabel14);
 
         textDiscount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
