@@ -30,6 +30,13 @@ public class PetEditModal extends javax.swing.JFrame {
     public PetEditModal(PetForm petForm, String id, String name, String breed, String color, String age, String description, String customerName) {
         initComponents();
         this.petForm = petForm;
+        this.id = id;
+        this.name = name;
+        this.breed = breed;
+        this.color = color;
+        this.age = age;
+        this.description = description;
+        this.customerName = customerName;
 
         addDraggableMouseListener();
         centerFrameOnScreen();
@@ -357,7 +364,7 @@ public class PetEditModal extends javax.swing.JFrame {
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
 
-            String sql = "UPDATE pets SET name = ?, breed = ?, color = ?, age = ?, description = ?, customer_id = (SELECT id FROM customers WHERE name = ?), updated_at = NOW() WHERE id = ?";
+            String sql = "UPDATE pets SET name = ?, breed = ?, color = ?, age = ?, description = ?, customer_id = (SELECT id FROM customers WHERE name = ?) WHERE id = ?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
@@ -375,7 +382,7 @@ public class PetEditModal extends javax.swing.JFrame {
                 petForm.showNotification("Success updated pets information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 petForm.refreshTable();
             } else {
-                petForm.showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT);
+                petForm.showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
             }
 
             close();

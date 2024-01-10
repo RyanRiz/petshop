@@ -62,7 +62,7 @@ public class PetCareForm extends javax.swing.JPanel {
         model.addColumn("Status");
     
         try {
-            String sql = "SELECT * FROM petcares JOIN customers ON petcares.customer_id = customers.id JOIN pets ON petcares.pet_id = pets.id";
+            String sql = "SELECT * FROM petcares JOIN pets ON petcares.pet_id = pets.id JOIN customers ON petcares.customer_id = customers.id";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             java.sql.ResultSet res = pst.executeQuery();
@@ -73,14 +73,16 @@ public class PetCareForm extends javax.swing.JPanel {
                 
                 // Retrieve an integer from the result set
                 int total = res.getInt("total");
+
+                int discount = res.getInt("discount");
     
                 model.addRow(new Object[]{
                     res.getString("id"),
                     res.getString("customers.name"),
                     res.getString("pets.name"),
-                    res.getString("date_in"),
-                    res.getString("date_out"),
-                    res.getString("discount"),
+                    res.getString("check_in"),
+                    res.getString("check_out"),
+                    discount,
                     total,
                     status
                 });
@@ -400,12 +402,13 @@ public class PetCareForm extends javax.swing.JPanel {
             String id = petCareTable.getValueAt(selectedRow, 0).toString();
             String customer = petCareTable.getValueAt(selectedRow, 1).toString();
             String pet = petCareTable.getValueAt(selectedRow, 2).toString();
-            String dateIn = petCareTable.getValueAt(selectedRow, 3).toString();
-            String dateOut = petCareTable.getValueAt(selectedRow, 4).toString();
+            String checkIn = petCareTable.getValueAt(selectedRow, 3).toString();
+            String checkOut = petCareTable.getValueAt(selectedRow, 4).toString();
             String discount = petCareTable.getValueAt(selectedRow, 5).toString();
-            String status = petCareTable.getValueAt(selectedRow, 6).toString();
+            String total = petCareTable.getValueAt(selectedRow, 6).toString();
+            String status = petCareTable.getValueAt(selectedRow, 7).toString();
 
-            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, dateIn, dateOut, discount ,status);
+            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, checkIn, checkOut, discount, total ,status);
             petCareEditModal.setVisible(true);
         }else{
             showNotification("Please select a row to edit.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);

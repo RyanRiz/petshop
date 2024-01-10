@@ -328,8 +328,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
     
-            String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id, created_at, updated_at) " +
-                         "VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1), NOW(), NOW())";
+            String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id) VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1))";
     
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
     
@@ -356,7 +355,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            petForm.showNotification("An error occurred. Please check the console for details.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+            petForm.showNotification("An error occurred. Please check the console for details.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }                                         
 

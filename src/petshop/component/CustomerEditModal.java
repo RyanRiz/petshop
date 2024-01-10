@@ -346,7 +346,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
                 return;
             }
     
-            String sql = "UPDATE customers SET name=?, phone=?, gender=?, address=?, city=?, updated_at=NOW() WHERE id=?";
+            String sql = "UPDATE customers SET name=?, phone=?, gender=?, address=?, city=? WHERE id=?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     

@@ -25,141 +25,76 @@ public class PetCareEditModal extends javax.swing.JFrame {
 
     private int mouseX, mouseY;
     private PetCareForm petCareForm;
-    private String pet;
-    private String selectedDiscount;
+
+    int totalDays = 0;
+    int pricePerDay = 0;
+    int discount = 0;
+    int total = 0;
+
+    String id;
+    String pet;
+    String customer;
+    String checkIn;
+    String checkOut;
+    String discountStatus;
+    String totalPrice;
+    String status;
 
     /**
      * Creates new form PetCareEditModal
      */
-    public PetCareEditModal(PetCareForm petCareForm, String id, String customer, String pet, String dateIn, String dateOut, String discount, String status) {
+    public PetCareEditModal(PetCareForm petCareForm, String id, String customer, String pet, String checkIn, String checkOut, String discount, String total, String status) {
         initComponents();
 
         this.petCareForm = petCareForm;
+        this.id = id;
+        this.pet = pet;
+        this.customer = customer;
+        this.checkIn = checkIn;
+        this.checkOut = checkOut;
+        this.discountStatus = discountStatus;
+        this.totalPrice = totalPrice;
+        this.status = status;
 
         // Set the frame to the center of the screen
         centerFrameOnScreen();
 
-        // Add draggable mouse listener
+        // Add a mouse listener to the entire frame
         addDraggableMouseListener();
 
-        // Set the combo box values
-        setComboCustomer(customer);
+        // Set the combo box
+        setComboCustomer();
 
-        // Set the combo box values
-        setComboPet(pet);
+        // Set the combo box
+        setComboPet();
 
-        // Set the combo box values and select the discount
-        setComboDiscount(discount);
+        // Set the combo box
+        setComboDiscount();
 
-        // Set the combo box values and select the status
-        setComboStatus(status);
+        // Set the combo box
+        setComboStatus();
 
-        // Set the date check-in
-        setDateCheckIn(dateIn);
+        // Set the text field
+        setField();
 
-        // Set the date check-out
-        setDateCheckOut(dateOut);
+        // Set the price
+        setPrice();
+
+        // Set the summary
+        setSummary();
     }
 
-    private void setComboCustomer(String customer) {
+    private void setField() {
+        textID.setText(id);
+
         try {
-            comboCustomer.removeAllItems();
-
-            String sql = "SELECT name FROM customers";
-            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
-            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-
-            java.sql.ResultSet res = pst.executeQuery();
-
-            while (res.next()) {
-                String name = res.getString("name");
-                comboCustomer.addItem(name);
-                if (name.equals(customer)) {
-                    comboCustomer.setSelectedItem(name);
-                }
-            }
-
-        } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-        }
-    }
-
-    private void setComboPet(String selectedPet) {
-        try {
-            comboPet.removeAllItems();
-
-            // Check if a customer is selected
-            if (comboCustomer.getSelectedItem() != null) {
-                String selectedCustomer = comboCustomer.getSelectedItem().toString();
-
-                String sql = "SELECT name FROM pets WHERE customer_id = (SELECT id FROM customers WHERE name = ?)";
-                java.sql.Connection conn = (java.sql.Connection) Database.configDB();
-                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-
-                pst.setString(1, selectedCustomer);
-
-                java.sql.ResultSet res = pst.executeQuery();
-
-                while (res.next()) {
-                    String petName = res.getString("name");
-                    comboPet.addItem(petName);
-                    
-                    // Set the selected pet if it matches
-                    if (petName.equals(selectedPet)) {
-                        comboPet.setSelectedItem(petName);
-                    }
-                }
-            }
-        } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-        }
-    }
-
-    private void setComboDiscount(String selectedDiscount) {
-        double discountValue = Double.parseDouble(selectedDiscount);
-    
-        comboDiscount.removeAllItems();
-    
-        comboDiscount.addItem("Ya");
-        comboDiscount.addItem("Tidak");
-    
-        // Select the appropriate item
-        if (discountValue > 0.0) {
-            comboDiscount.setSelectedItem("Ya");
-        } else {
-            comboDiscount.setSelectedItem("Tidak");
-        }
-    }    
-
-    private void setComboStatus(String selectedStatus) {
-        comboStatus.removeAllItems();
-
-        comboStatus.addItem("On Progress");
-        comboStatus.addItem("Done");
-
-        // Select the appropriate item
-        if ("On Progress".equals(selectedStatus)) {
-            comboStatus.setSelectedItem("On Progress");
-        } else {
-            comboStatus.setSelectedItem("Done");
-        }
-    }
-
-    private void setDateCheckIn(String dateIn) {
-        try {
+            // Convert date to the 'YYYY-MM-DD' format
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = dateFormat.parse(dateIn);
-            dateCheckIn.setDate(date);
-        } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-        }
-    }
+            java.util.Date dateIn = dateFormat.parse(checkIn);
+            java.util.Date dateOut = dateFormat.parse(checkOut);
 
-    private void setDateCheckOut(String dateOut) {
-        try {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = dateFormat.parse(dateOut);
-            dateCheckOut.setDate(date);
+            dateCheckIn.setDate(dateIn);
+            dateCheckOut.setDate(dateOut);
         } catch (Exception e) {
             petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
@@ -204,6 +139,94 @@ public class PetCareEditModal extends javax.swing.JFrame {
         setLocation(x, y);
     }
 
+    private void setComboCustomer() {
+        try {
+            comboCustomer.removeAllItems();
+
+            String sql = "SELECT name FROM customers";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+
+            java.sql.ResultSet res = pst.executeQuery();
+
+            while (res.next()) {
+                String name = res.getString("name");
+                comboCustomer.addItem(name);
+
+                // If the current customer matches the provided customerName, select it
+                if (name.equals(customer)) {
+                    comboCustomer.setSelectedItem(name);
+                }
+            }
+
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    private void setComboPet() {
+        try {
+            comboPet.removeAllItems();
+    
+            // Check if a customer is selected
+            if (comboCustomer.getSelectedItem() != null) {
+               String sql = "SELECT name FROM pets WHERE customer_id = (SELECT id FROM customers WHERE name = ?)";
+                java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+
+                pst.setString(1, comboCustomer.getSelectedItem().toString());
+
+                java.sql.ResultSet res = pst.executeQuery();
+
+                while (res.next()) {
+                    String name = res.getString("name");
+                    comboPet.addItem(name);
+
+                    // If the current pet matches the provided petName, select it
+                    if (name.equals(pet)) {
+                        comboPet.setSelectedItem(name);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+    
+
+    private void setComboDiscount() {
+        comboDiscount.removeAllItems();
+        comboDiscount.addItem("Ya");
+        comboDiscount.addItem("Tidak");
+    
+        if (discountStatus != null) {
+            try {
+                int total = Integer.parseInt(discountStatus);
+    
+                if (total >= 1) {
+                    comboDiscount.setSelectedItem("Ya");
+                } else {
+                    comboDiscount.setSelectedItem("Tidak");
+                }
+            } catch (NumberFormatException e) {
+                petCareForm.showNotification("Invalid discount value: " + discountStatus, Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            }
+        }
+    }    
+
+    private void setComboStatus() {
+        comboStatus.removeAllItems();
+    
+        comboStatus.addItem("On Progress");
+        comboStatus.addItem("Done");
+    
+        if (status.equals("On Progress")) {
+            comboStatus.setSelectedItem("On Progress");
+        } else {
+            comboStatus.setSelectedItem("Done");
+        }
+    }    
+
     private void resetForm() {
         comboCustomer.setSelectedIndex(0);
         comboPet.setSelectedIndex(0);
@@ -211,6 +234,81 @@ public class PetCareEditModal extends javax.swing.JFrame {
         dateCheckOut.setDate(null);
         comboDiscount.setSelectedIndex(0);
         comboStatus.setSelectedIndex(0);
+        textTotal.setText("0");
+    }
+
+    private void setSummary() {
+        try {
+            // Check if both dateCheckIn and dateCheckOut are not null
+            if (dateCheckIn.getDate() != null && dateCheckOut.getDate() != null) {
+                // Convert date to the 'YYYY-MM-DD' format
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
+                String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
+    
+                // Calculate total days
+                LocalDate checkInDate = dateCheckIn.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate checkOutDate = dateCheckOut.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                totalDays = (int) ChronoUnit.DAYS.between(checkInDate, checkOutDate);
+    
+                // Set the total days to the textTotalDay label
+                textTotalDay.setText(String.valueOf(totalDays));
+                setTotal();
+            } else {
+                textTotalDay.setText("0");
+            }
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+
+    private void setPrice() {
+        try {
+            String sqlPrice = "SELECT price FROM settings WHERE id = 1";
+            java.sql.Connection connPrice = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pstPrice = connPrice.prepareStatement(sqlPrice);
+
+            java.sql.ResultSet resPrice = pstPrice.executeQuery();
+            if (resPrice.next()) {
+                pricePerDay = resPrice.getInt("price");
+
+                textPricePerDay.setText(String.valueOf(pricePerDay));
+            }
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+    
+    private void setDiscount() {
+        try {
+            String sqlDiscount = "SELECT discount FROM settings WHERE id = 1";
+            java.sql.Connection connDiscount = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pstDiscount = connDiscount.prepareStatement(sqlDiscount);
+    
+            java.sql.ResultSet resDiscount = pstDiscount.executeQuery();
+            if (resDiscount.next()) {
+                discount = resDiscount.getInt("discount");
+    
+                textDiscount.setText(String.valueOf(discount));
+            }
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }
+        
+    private void setTotal() {
+        try {
+            int totalday = totalDays;
+            int price = pricePerDay;
+            int discounts = discount;
+
+            int totaldiscount = (int) ((discounts / 100.0) * price * totalday);
+            total = (price * totalday) - totaldiscount;
+
+            textTotal.setText(String.valueOf(total));
+        } catch (NumberFormatException e) {
+            petCareForm.showNotification("Invalid input. Please enter valid numbers.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
     }
 
     /**
@@ -236,14 +334,24 @@ public class PetCareEditModal extends javax.swing.JFrame {
         dateCheckIn = new com.toedter.calendar.JDateChooser();
         dateCheckOut = new com.toedter.calendar.JDateChooser();
         comboDiscount = new javax.swing.JComboBox<>();
-        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         textID = new javax.swing.JTextField();
+        buttonAdd = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
-        buttonEdit = new javax.swing.JButton();
         buttonReset = new javax.swing.JButton();
+        panelRounded2 = new petshop.custom.PanelRounded();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        textTotalDay = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        textPricePerDay = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        textDiscount = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        textTotal = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setUndecorated(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
@@ -275,16 +383,33 @@ public class PetCareEditModal extends javax.swing.JFrame {
         comboCustomer.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         comboCustomer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                setComboPet(selectedDiscount);
+                comboCustomerActionPerformed(evt);
             }
         });
 
         comboPet.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        comboDiscount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        dateCheckIn.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateCheckInPropertyChange(evt);
+            }
+        });
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel8.setText("ID");
+        dateCheckOut.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                dateCheckOutPropertyChange(evt);
+            }
+        });
+
+        comboDiscount.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboDiscount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboDiscountActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel9.setText("ID");
 
         textID.setEditable(false);
 
@@ -296,23 +421,23 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelRounded1Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(comboDiscount, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateCheckOut, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dateCheckIn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboCustomer, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(comboPet, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textID, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(panelRounded1Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(textID)
+                        .addComponent(comboDiscount, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dateCheckOut, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dateCheckIn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboCustomer, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboStatus, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboPet, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
                             .addGap(11, 11, 11)
-                            .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(panelRounded1Layout.createSequentialGroup()
+                            .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
                                     .addGroup(panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
                                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -322,19 +447,16 @@ public class PetCareEditModal extends javax.swing.JFrame {
                                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(0, 0, Short.MAX_VALUE)))
                                     .addGap(86, 86, 86))
-                                .addGroup(panelRounded1Layout.createSequentialGroup()
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelRounded1Layout.createSequentialGroup()
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(196, 196, 196))
-                                .addGroup(panelRounded1Layout.createSequentialGroup()
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGap(195, 195, 195))))))
+                                    .addGap(196, 196, 196))))))
                 .addGap(20, 20, 20))
         );
         panelRounded1Layout.setVerticalGroup(
             panelRounded1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRounded1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addComponent(textID)
                 .addGap(18, 18, 18)
@@ -364,6 +486,17 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 .addGap(25, 25, 25))
         );
 
+        buttonAdd.setBackground(new java.awt.Color(46, 115, 228));
+        buttonAdd.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        buttonAdd.setForeground(new java.awt.Color(255, 255, 255));
+        buttonAdd.setText("Perbarui");
+        buttonAdd.setFocusable(false);
+        buttonAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAddActionPerformed(evt);
+            }
+        });
+
         buttonCancel.setBackground(new java.awt.Color(142, 149, 155));
         buttonCancel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         buttonCancel.setForeground(new java.awt.Color(255, 255, 255));
@@ -372,17 +505,6 @@ public class PetCareEditModal extends javax.swing.JFrame {
         buttonCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonCancelActionPerformed(evt);
-            }
-        });
-
-        buttonEdit.setBackground(new java.awt.Color(46, 115, 228));
-        buttonEdit.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        buttonEdit.setForeground(new java.awt.Color(255, 255, 255));
-        buttonEdit.setText("Perbarui");
-        buttonEdit.setFocusable(false);
-        buttonEdit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEditActionPerformed(evt);
             }
         });
 
@@ -397,25 +519,96 @@ public class PetCareEditModal extends javax.swing.JFrame {
             }
         });
 
+        panelRounded2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new java.awt.GridLayout(4, 2));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel8.setText("Total Hari :");
+        jPanel1.add(jLabel8);
+
+        textTotalDay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textTotalDay.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        textTotalDay.setText("0");
+        jPanel1.add(textTotalDay);
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel12.setText("Harga Per-hari :");
+        jPanel1.add(jLabel12);
+
+        textPricePerDay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textPricePerDay.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        textPricePerDay.setText("0");
+        jPanel1.add(textPricePerDay);
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel14.setText("Diskon :");
+        jPanel1.add(jLabel14);
+
+        textDiscount.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textDiscount.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        textDiscount.setText("0");
+        jPanel1.add(textDiscount);
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel10.setText("Total :");
+        jPanel1.add(jLabel10);
+
+        textTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        textTotal.setText("jLabel11");
+        jPanel1.add(textTotal);
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(57, 62, 89));
+        jLabel16.setText("Summary");
+
+        javax.swing.GroupLayout panelRounded2Layout = new javax.swing.GroupLayout(panelRounded2);
+        panelRounded2.setLayout(panelRounded2Layout);
+        panelRounded2Layout.setHorizontalGroup(
+            panelRounded2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRounded2Layout.createSequentialGroup()
+                .addGap(141, 141, 141)
+                .addComponent(jLabel16)
+                .addGap(141, 141, 141))
+            .addGroup(panelRounded2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelRounded2Layout.setVerticalGroup(
+            panelRounded2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelRounded2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
+                .addComponent(panelRounded1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelRounded2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(buttonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
                         .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelRounded1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(110, 110, 110)
+                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(300, 300, 300)
                 .addComponent(jLabel1)
-                .addGap(110, 110, 110))
+                .addGap(300, 300, 300))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -423,13 +616,18 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(panelRounded1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelRounded2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(buttonReset, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(buttonAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelRounded1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(20, 20, 20))))
         );
 
         pack();
@@ -439,13 +637,67 @@ public class PetCareEditModal extends javax.swing.JFrame {
         this.dispose();
     }
 
+    private void comboCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboCustomerActionPerformed
+        setComboPet();
+    }//GEN-LAST:event_comboCustomerActionPerformed
+
+    private void dateCheckInPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateCheckInPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            setSummary();
+        }
+    }//GEN-LAST:event_dateCheckInPropertyChange
+
+    private void dateCheckOutPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateCheckOutPropertyChange
+        if ("date".equals(evt.getPropertyName())) {
+            setSummary();
+        }
+    }//GEN-LAST:event_dateCheckOutPropertyChange
+
+    private void comboDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDiscountActionPerformed
+        if (comboDiscount.getSelectedItem() != null && comboDiscount.getSelectedItem().equals("Ya")) {
+            setDiscount();
+        } else {
+            textDiscount.setText("0");
+            discount = 0;
+        }
+        setTotal();
+    }//GEN-LAST:event_comboDiscountActionPerformed
+
+    private void buttonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddActionPerformed
+        try {
+            String sql = "UPDATE petcares SET customer_id = (SELECT id FROM customers WHERE name = ?), pet_id = (SELECT id FROM pets WHERE name = ?), check_in = ?, check_out = ?, discount = ?, total = ?, status = ? WHERE id = ?";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+
+            // Convert date to the 'YYYY-MM-DD' format
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
+            String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
+
+            pst.setString(1, comboCustomer.getSelectedItem().toString());
+            pst.setString(2, comboPet.getSelectedItem().toString());
+            pst.setString(3, formattedDateIn);
+            pst.setString(4, formattedDateOut);
+            pst.setInt(5, discount);
+            pst.setInt(6, total);
+            pst.setInt(7, comboStatus.getSelectedItem() != null && comboStatus.getSelectedItem().equals("On Progress") ? 0 : 1);
+            pst.setString(8, textID.getText());
+
+            pst.execute();
+
+            petCareForm.showNotification("Pet care information updated successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+
+            petCareForm.refreshTable();
+
+            close();
+        } catch (Exception e) {
+            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+        }
+    }//GEN-LAST:event_buttonAddActionPerformed
+
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         close();
     }//GEN-LAST:event_buttonCancelActionPerformed
-
-    private void buttonEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditActionPerformed
-        
-    }//GEN-LAST:event_buttonEditActionPerformed
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         resetForm();
@@ -480,8 +732,8 @@ public class PetCareEditModal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAdd;
     private javax.swing.JButton buttonCancel;
-    private javax.swing.JButton buttonEdit;
     private javax.swing.JButton buttonReset;
     private javax.swing.JComboBox<String> comboCustomer;
     private javax.swing.JComboBox<String> comboDiscount;
@@ -490,6 +742,10 @@ public class PetCareEditModal extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateCheckIn;
     private com.toedter.calendar.JDateChooser dateCheckOut;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -497,7 +753,14 @@ public class PetCareEditModal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private petshop.custom.PanelRounded panelRounded1;
+    private petshop.custom.PanelRounded panelRounded2;
+    private javax.swing.JLabel textDiscount;
     private javax.swing.JTextField textID;
+    private javax.swing.JLabel textPricePerDay;
+    private javax.swing.JLabel textTotal;
+    private javax.swing.JLabel textTotalDay;
     // End of variables declaration//GEN-END:variables
 }

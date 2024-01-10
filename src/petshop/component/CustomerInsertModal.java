@@ -302,7 +302,7 @@ public class CustomerInsertModal extends javax.swing.JFrame {
                 return;
             }
     
-            String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES (?, ?, ?, ?, ?, NOW(), NOW())";
+            String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     
