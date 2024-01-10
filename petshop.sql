@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 07 Jan 2024 pada 13.14
+-- Waktu pembuatan: 10 Jan 2024 pada 16.03
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -33,70 +33,8 @@ CREATE TABLE `customers` (
   `phone` char(15) NOT NULL,
   `gender` tinyint(1) NOT NULL,
   `address` varchar(255) DEFAULT NULL,
-  `city` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `city` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `memberships`
---
-
-CREATE TABLE `memberships` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `customer_id` bigint(20) UNSIGNED NOT NULL,
-  `membership_start` date NOT NULL,
-  `membership_end` date NOT NULL,
-  `status` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `membership_transactions`
---
-
-CREATE TABLE `membership_transactions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `membership_id` bigint(20) UNSIGNED NOT NULL,
-  `months` int(11) NOT NULL,
-  `subtotal` int(11) NOT NULL,
-  `discount` int(11) NOT NULL,
-  `total` bigint(20) NOT NULL,
-  `transaction_date` date NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(3, '2024_01_05_023050_create_customers_table', 1),
-(4, '2024_01_05_023349_create_pets_table', 1),
-(5, '2024_01_05_023706_create_petcares_table', 1),
-(6, '2024_01_05_023957_create_memberships_table', 1),
-(7, '2024_01_05_024211_create_membership_transactions_table', 1),
-(8, '2024_01_05_024540_create_settings_table', 1);
 
 -- --------------------------------------------------------
 
@@ -106,14 +44,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `petcares` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `date_in` date NOT NULL,
-  `date_out` date NOT NULL,
+  `check_in` date NOT NULL,
+  `check_out` date NOT NULL,
   `pet_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `subtotal` int(11) NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `customer_id` bigint(20) UNSIGNED NOT NULL,
+  `discount` double NOT NULL,
+  `total` double NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -129,9 +66,7 @@ CREATE TABLE `pets` (
   `color` varchar(255) NOT NULL,
   `age` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `customer_id` bigint(20) UNSIGNED NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `customer_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -143,17 +78,15 @@ CREATE TABLE `pets` (
 CREATE TABLE `settings` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `price` varchar(255) NOT NULL DEFAULT '0',
-  `discount` varchar(255) NOT NULL DEFAULT '0',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `discount` varchar(255) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `settings`
 --
 
-INSERT INTO `settings` (`id`, `price`, `discount`, `created_at`, `updated_at`) VALUES
-(1, '10000', '20', NULL, NULL);
+INSERT INTO `settings` (`id`, `price`, `discount`) VALUES
+(1, '20000', '20');
 
 -- --------------------------------------------------------
 
@@ -164,17 +97,15 @@ INSERT INTO `settings` (`id`, `price`, `discount`, `created_at`, `updated_at`) V
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin', '2024-01-07 10:36:35', '2024-01-07 10:36:35');
+INSERT INTO `users` (`id`, `username`, `password`) VALUES
+(1, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -187,32 +118,12 @@ ALTER TABLE `customers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `memberships`
---
-ALTER TABLE `memberships`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `memberships_customer_id_foreign` (`customer_id`);
-
---
--- Indeks untuk tabel `membership_transactions`
---
-ALTER TABLE `membership_transactions`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `membership_transactions_membership_id_foreign` (`membership_id`);
-
---
--- Indeks untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `petcares`
 --
 ALTER TABLE `petcares`
   ADD PRIMARY KEY (`id`),
   ADD KEY `petcares_pet_id_foreign` (`pet_id`),
-  ADD KEY `petcares_user_id_foreign` (`user_id`);
+  ADD KEY `petcares_customer_id_foreign` (`customer_id`);
 
 --
 -- Indeks untuk tabel `pets`
@@ -245,24 +156,6 @@ ALTER TABLE `customers`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `memberships`
---
-ALTER TABLE `memberships`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `membership_transactions`
---
-ALTER TABLE `membership_transactions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
 -- AUTO_INCREMENT untuk tabel `petcares`
 --
 ALTER TABLE `petcares`
@@ -291,23 +184,11 @@ ALTER TABLE `users`
 --
 
 --
--- Ketidakleluasaan untuk tabel `memberships`
---
-ALTER TABLE `memberships`
-  ADD CONSTRAINT `memberships_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
-
---
--- Ketidakleluasaan untuk tabel `membership_transactions`
---
-ALTER TABLE `membership_transactions`
-  ADD CONSTRAINT `membership_transactions_membership_id_foreign` FOREIGN KEY (`membership_id`) REFERENCES `memberships` (`id`);
-
---
 -- Ketidakleluasaan untuk tabel `petcares`
 --
 ALTER TABLE `petcares`
-  ADD CONSTRAINT `petcares_pet_id_foreign` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`),
-  ADD CONSTRAINT `petcares_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `petcares_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `petcares_pet_id_foreign` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`);
 
 --
 -- Ketidakleluasaan untuk tabel `pets`
