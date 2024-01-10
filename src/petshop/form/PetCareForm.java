@@ -57,7 +57,7 @@ public class PetCareForm extends javax.swing.JPanel {
         model.addColumn("Pet");
         model.addColumn("Check-In");
         model.addColumn("Check-Out");
-        model.addColumn("Diskon");
+        model.addColumn("Diskon (Persen)");
         model.addColumn("Total Harga");
         model.addColumn("Status");
     
