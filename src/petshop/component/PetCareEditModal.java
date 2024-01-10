@@ -37,13 +37,12 @@ public class PetCareEditModal extends javax.swing.JFrame {
     String checkIn;
     String checkOut;
     String discountStatus;
-    String totalPrice;
     String status;
 
     /**
      * Creates new form PetCareEditModal
      */
-    public PetCareEditModal(PetCareForm petCareForm, String id, String customer, String pet, String checkIn, String checkOut, String discount, String total, String status) {
+    public PetCareEditModal(PetCareForm petCareForm, String id, String customer, String pet, String checkIn, String checkOut, String discount, String status) {
         initComponents();
 
         this.petCareForm = petCareForm;
@@ -53,7 +52,6 @@ public class PetCareEditModal extends javax.swing.JFrame {
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.discountStatus = discountStatus;
-        this.totalPrice = totalPrice;
         this.status = status;
 
         // Set the frame to the center of the screen
@@ -241,10 +239,6 @@ public class PetCareEditModal extends javax.swing.JFrame {
         try {
             // Check if both dateCheckIn and dateCheckOut are not null
             if (dateCheckIn.getDate() != null && dateCheckOut.getDate() != null) {
-                // Convert date to the 'YYYY-MM-DD' format
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
-                String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
     
                 // Calculate total days
                 LocalDate checkInDate = dateCheckIn.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -352,6 +346,8 @@ public class PetCareEditModal extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(238, 240, 244));
+        setUndecorated(true);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(57, 62, 89));
@@ -552,12 +548,12 @@ public class PetCareEditModal extends javax.swing.JFrame {
         jPanel1.add(textDiscount);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setText("Total :");
+        jLabel10.setText("Total Harga :");
         jPanel1.add(jLabel10);
 
         textTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         textTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        textTotal.setText("jLabel11");
+        textTotal.setText("0");
         jPanel1.add(textTotal);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N

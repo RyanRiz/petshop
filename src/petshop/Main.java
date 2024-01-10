@@ -355,11 +355,11 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private boolean dashIconClicked = true;
-    private boolean userIconClicked = false;
-    private boolean petCareIconClicked = false;
-    private boolean saleIconClicked = false;
-    private boolean settingIconClicked = false;
+    boolean dashIconClicked = true;
+    boolean userIconClicked = false;
+    boolean petCareIconClicked = false;
+    boolean saleIconClicked = false;
+    boolean settingIconClicked = false;
 
     private void dashboardIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardIconMouseClicked
         ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-custom.png"));

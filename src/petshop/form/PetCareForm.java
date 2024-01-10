@@ -58,7 +58,7 @@ public class PetCareForm extends javax.swing.JPanel {
         model.addColumn("Check-In");
         model.addColumn("Check-Out");
         model.addColumn("Diskon");
-        model.addColumn("Total Bayar");
+        model.addColumn("Total Harga");
         model.addColumn("Status");
     
         try {
@@ -405,10 +405,9 @@ public class PetCareForm extends javax.swing.JPanel {
             String checkIn = petCareTable.getValueAt(selectedRow, 3).toString();
             String checkOut = petCareTable.getValueAt(selectedRow, 4).toString();
             String discount = petCareTable.getValueAt(selectedRow, 5).toString();
-            String total = petCareTable.getValueAt(selectedRow, 6).toString();
             String status = petCareTable.getValueAt(selectedRow, 7).toString();
 
-            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, checkIn, checkOut, discount, total ,status);
+            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, checkIn, checkOut, discount ,status);
             petCareEditModal.setVisible(true);
         }else{
             showNotification("Please select a row to edit.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);

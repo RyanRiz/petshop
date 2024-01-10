@@ -348,9 +348,7 @@ public class PetInsertModal extends javax.swing.JFrame {
                 result.execute();
                 petForm.showNotification("Pet added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
     
-                if (petForm != null) {
-                    petForm.setTableData();
-                }
+                petForm.setTableData();
                 close();
             }
         } catch (Exception e) {

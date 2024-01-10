@@ -298,7 +298,7 @@ public class SettingForm extends javax.swing.JPanel {
 
     private void buttonUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateActionPerformed
         String username = textUsername.getText();
-        String password = textPassword.getText();
+        String password = new String(textPassword.getPassword());
 
         try {
             String sql = "UPDATE users SET username = '"+username+"', password = '"+password+"' WHERE id = 1";

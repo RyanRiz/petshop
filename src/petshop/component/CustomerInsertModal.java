@@ -302,7 +302,7 @@ public class CustomerInsertModal extends javax.swing.JFrame {
                 return;
             }
     
-            String sql = "INSERT INTO customers (name, phone, gender, city, address, created_at, updated_at) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO customers (name, phone, gender, city, address) VALUES (?, ?, ?, ?, ?)";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
     
@@ -322,6 +322,7 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             close();
         } catch (Exception e) {
             customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_buttonAdd1MouseClicked
 

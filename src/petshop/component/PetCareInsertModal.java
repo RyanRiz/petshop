@@ -16,8 +16,6 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import javax.swing.JTextField;
-
 import java.awt.Toolkit;
 
 /**
@@ -182,10 +180,6 @@ public class PetCareInsertModal extends javax.swing.JFrame {
         try {
             // Check if both dateCheckIn and dateCheckOut are not null
             if (dateCheckIn.getDate() != null && dateCheckOut.getDate() != null) {
-                // Convert date to the 'YYYY-MM-DD' format
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
-                String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
     
                 // Calculate total days
                 LocalDate checkInDate = dateCheckIn.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -484,12 +478,12 @@ public class PetCareInsertModal extends javax.swing.JFrame {
         jPanel1.add(textDiscount);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel10.setText("Total :");
+        jLabel10.setText("Total Harga :");
         jPanel1.add(jLabel10);
 
         textTotal.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         textTotal.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        textTotal.setText("jLabel11");
+        textTotal.setText("0");
         jPanel1.add(textTotal);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
