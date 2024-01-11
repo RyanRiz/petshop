@@ -295,7 +295,7 @@ public class Login extends javax.swing.JFrame {
                 Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT, "Username or password is incorrect");
             }
         } catch (Exception e) {
-            e.printStackTrace(); // Handle the exception appropriately, e.g., show an error message
+            e.printStackTrace();
         }
     }//GEN-LAST:event_buttonLoginActionPerformed
 
