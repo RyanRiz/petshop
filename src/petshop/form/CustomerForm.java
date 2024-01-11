@@ -415,7 +415,7 @@ public class CustomerForm extends javax.swing.JPanel {
                         showNotification("Customer deleted successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                         refreshTable();
                     } else {
-                        showNotification("Failed to delete customer", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                        showNotification("Failed to delete customer", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
                     showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);

@@ -577,6 +577,11 @@ public class PetCareInsertModal extends javax.swing.JFrame {
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
+            if (comboCustomer.getSelectedItem() == null || comboPet.getSelectedItem() == null || dateCheckIn.getDate() == null || dateCheckOut.getDate() == null || comboDiscount.getSelectedItem() == null || comboStatus.getSelectedItem() == null) {
+                petCareForm.showNotification("Please fill all the fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
+
             // Convert date to the 'YYYY-MM-DD' format
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
@@ -591,15 +596,18 @@ public class PetCareInsertModal extends javax.swing.JFrame {
             pst.setInt(7, comboStatus.getSelectedItem() != null && comboStatus.getSelectedItem().equals("On Progress") ? 0 : 1);
 
             pst.execute();
+            int rowsAffected = pst.getUpdateCount();
 
-            petCareForm.showNotification("Pet care information added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-
-            petCareForm.refreshTable();
+            if (rowsAffected > 0) {
+                petCareForm.showNotification("Pet care information added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                petCareForm.refreshTable();
+            } else {
+                petCareForm.showNotification("Failed to add pet care information.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+            }
 
             close();
         } catch (Exception e) {
             petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-            System.out.println(e.getMessage());
         }
     }//GEN-LAST:event_buttonAddActionPerformed
 

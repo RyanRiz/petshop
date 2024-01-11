@@ -298,7 +298,7 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             String address = areaAddress.getText();
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -311,18 +311,20 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             pst.setString(3, gender);
             pst.setString(4, city);
             pst.setString(5, address);
-    
+
             pst.execute();
-            customerForm.showNotification("Success added customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-    
-            if (customerForm != null) {
+            int rowsAffected = pst.getUpdateCount();
+
+            if (rowsAffected > 0) {
+                customerForm.showNotification("Success added customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 customerForm.setTableData();
+            } else {
+                customerForm.showNotification("Failed to add customer information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
-            
+
             close();
         } catch (Exception e) {
-            customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
-            System.out.println(e.getMessage());
+            customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonAdd1MouseClicked
 

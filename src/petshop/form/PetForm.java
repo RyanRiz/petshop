@@ -406,7 +406,7 @@ public class PetForm extends javax.swing.JPanel {
 
             int confirmDialogResult = JOptionPane.showConfirmDialog(
                         this,
-                        "Are you sure you want to delete this pets?",
+                        "Are you sure you want to delete this pet?",
                         "Confirm Deletion",
                         JOptionPane.YES_NO_OPTION);
             
@@ -424,10 +424,10 @@ public class PetForm extends javax.swing.JPanel {
                         showNotification("Pet deleted successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                         refreshTable();
                     } else {
-                        showNotification("Failed to delete pet", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                        showNotification("Failed to delete pet", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                     }
                 } catch (Exception e) {
-                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                 }
             }
         } else {

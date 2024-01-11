@@ -665,7 +665,11 @@ public class PetCareEditModal extends javax.swing.JFrame {
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
-            // Convert date to the 'YYYY-MM-DD' format
+            if (comboCustomer.getSelectedItem() == null || comboPet.getSelectedItem() == null || dateCheckIn.getDate() == null || dateCheckOut.getDate() == null || comboDiscount.getSelectedItem() == null || comboStatus.getSelectedItem() == null) {
+                petCareForm.showNotification("Please fill all the fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
+
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
             String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
@@ -680,10 +684,14 @@ public class PetCareEditModal extends javax.swing.JFrame {
             pst.setString(8, textID.getText());
 
             pst.execute();
+            int rowsAffected = pst.getUpdateCount();
 
-            petCareForm.showNotification("Pet care information updated successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-
-            petCareForm.refreshTable();
+            if (rowsAffected > 0) {
+                petCareForm.showNotification("Pet care information updated successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                petCareForm.refreshTable();
+            } else {
+                petCareForm.showNotification("Failed to update pet care information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            }
 
             close();
         } catch (Exception e) {

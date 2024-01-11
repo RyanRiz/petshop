@@ -7,6 +7,7 @@ package petshop.form;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 
 import com.formdev.flatlaf.FlatClientProperties;
@@ -421,17 +422,25 @@ public class PetCareForm extends javax.swing.JPanel {
         if (selectedRow != -1){
             String id = (String) petCareTable.getValueAt(selectedRow, 0);
 
-            try {
-                String sql = "DELETE FROM petcares WHERE id = ?";
-                java.sql.Connection conn = (java.sql.Connection) Database.configDB();
-                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, id);
-                pst.executeUpdate();
+            int confirmDialogResult = JOptionPane.showConfirmDialog(
+                        this,
+                        "Are you sure you want to delete this pet care information?",
+                        "Confirm Deletion",
+                        JOptionPane.YES_NO_OPTION);
 
-                showNotification("Pet Care data deleted successfully.", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
-                setTableData();
-            } catch (Exception e) {
-                showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            if (confirmDialogResult == JOptionPane.YES_OPTION) {
+                try {
+                    String sql = "DELETE FROM petcares WHERE id = ?";
+                    java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+                    java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                    pst.setString(1, id);
+                    pst.executeUpdate();
+    
+                    showNotification("Pet Care data deleted successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                    setTableData();
+                } catch (Exception e) {
+                    showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                }
             }
         } else {
             showNotification("Please select a row to delete.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);

@@ -277,7 +277,7 @@ public class SettingForm extends javax.swing.JPanel {
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
-            showNotification("Price updated!", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
+            showNotification("Price updated!", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
         } catch (Exception e) {
             showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
@@ -290,7 +290,7 @@ public class SettingForm extends javax.swing.JPanel {
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
             pst.execute();
-            showNotification("Discount updated!", Notifications.Type.SUCCESS, Notifications.Location.BOTTOM_RIGHT);
+            showNotification("Discount updated!", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
         } catch (Exception e) {
             showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }

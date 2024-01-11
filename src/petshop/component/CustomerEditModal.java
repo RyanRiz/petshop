@@ -342,7 +342,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
             String address = areaAddress.getText();
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -361,17 +361,14 @@ public class CustomerEditModal extends javax.swing.JFrame {
     
             if (rowsAffected > 0) {
                 customerForm.showNotification("Success updated customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-    
-                if (customerForm != null) {
-                    customerForm.setTableData();
-                }
-
-                close();
+                customerForm.setTableData();
             } else {
-                customerForm.showNotification("Failed to update customer information", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                customerForm.showNotification("Failed to update customer information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
+
+            close();
         } catch (Exception e) {
-            customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+            customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonUpdateMouseClicked
 

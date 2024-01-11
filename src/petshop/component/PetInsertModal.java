@@ -328,33 +328,35 @@ public class PetInsertModal extends javax.swing.JFrame {
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
     
-            String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id) VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1))";
-    
-            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
-    
             if (petName.isEmpty() || breed.isEmpty() || color.isEmpty()) {
-                petForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.TOP_RIGHT);
+                petForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
+            
+                String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id) VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1))";
+                java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+                pst.setString(1, petName);
+                pst.setString(2, breed);
+                pst.setString(3, color);
+                pst.setInt(4, age);
+                pst.setString(5, description);
+                pst.setString(6, customerName);
     
-            try (java.sql.PreparedStatement result = conn.prepareStatement(sql)) {
-                result.setString(1, petName);
-                result.setString(2, breed);
-                result.setString(3, color);
-                result.setInt(4, age);
-                result.setString(5, description);
-                result.setString(6, customerName);
-    
-                result.execute();
-                petForm.showNotification("Pet added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-    
-                petForm.setTableData();
+                pst.execute();
+                int rowsAffected = pst.getUpdateCount();
+
+                if (rowsAffected > 0) {
+                    petForm.showNotification("Pet added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                    petForm.setTableData();
+                } else {
+                    petForm.showNotification("Failed to add pet.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                }
+
                 close();
+            } catch (Exception e) {
+                petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            petForm.showNotification("An error occurred. Please check the console for details.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-        }
     }                                         
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed

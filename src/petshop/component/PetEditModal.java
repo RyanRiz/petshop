@@ -92,7 +92,7 @@ public class PetEditModal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -363,6 +363,11 @@ public class PetEditModal extends javax.swing.JFrame {
             String age = textAge.getText();
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
+
+            if (name.isEmpty() || breed.isEmpty() || color.isEmpty() || age.isEmpty() || description.isEmpty()) {
+                petForm.showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
 
             String sql = "UPDATE pets SET name = ?, breed = ?, color = ?, age = ?, description = ?, customer_id = (SELECT id FROM customers WHERE name = ?) WHERE id = ?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
