@@ -342,7 +342,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
             String address = areaAddress.getText();
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                customerForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                customerForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     

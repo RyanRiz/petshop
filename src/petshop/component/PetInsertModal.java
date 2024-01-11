@@ -329,7 +329,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             String customerName = comboCustomer.getSelectedItem().toString();
     
             if (petName.isEmpty() || breed.isEmpty() || color.isEmpty()) {
-                petForm.showNotification("Please fill in all fields.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                petForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
             
