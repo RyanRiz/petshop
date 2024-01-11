@@ -11,6 +11,7 @@ import petshop.form.PetCareForm;
 import petshop.form.PetForm;
 import petshop.form.SettingForm;
 import raven.toast.Notifications;
+import petshop.auth.Login;
 import petshop.form.CustomerForm;
 
 import java.awt.Color;
@@ -434,7 +435,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_userIconMouseClicked
 
     private void petCareIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_petCareIconMouseClicked
-        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-custom-40.png"));
+        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/paw-custom-40.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
@@ -442,7 +443,7 @@ public class Main extends javax.swing.JFrame {
 
         petCareIconClicked = true;
         petCareIcon.setBackground(new Color(239, 246, 255));
-        jLabel8.setIcon(imageNormal);
+        jLabel8.setIcon(imageClicked);
 
         dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
@@ -468,7 +469,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_petCareIconMouseClicked
 
     private void transactionIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactionIconMouseClicked
-        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-custom-40.png"));
+        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-custom-40.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
@@ -476,7 +477,7 @@ public class Main extends javax.swing.JFrame {
 
         saleIconClicked = true;
         transactionIcon.setBackground(new Color(239, 246, 255));
-        jLabel9.setIcon(imageNormal);
+        jLabel9.setIcon(imageClicked);
 
         dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
@@ -502,7 +503,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_transactionIconMouseClicked
 
     private void settingIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingIconMouseClicked
-        ImageIcon imageNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-custom.png"));
+        ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/cog-custom.png"));
         ImageIcon dashNormal = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-normal.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
@@ -510,7 +511,7 @@ public class Main extends javax.swing.JFrame {
 
         settingIconClicked = true;
         settingIcon.setBackground(new Color(239, 246, 255));
-        jLabel11.setIcon(imageNormal);
+        jLabel11.setIcon(imageClicked);
 
         dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
@@ -551,6 +552,8 @@ public class Main extends javax.swing.JFrame {
 
     private void logoutIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutIconMouseClicked
         close();
+        Login login = new Login();
+        login.setVisible(true);
     }//GEN-LAST:event_logoutIconMouseClicked
 
     /**
