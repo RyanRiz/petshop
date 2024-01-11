@@ -38,21 +38,24 @@ public class PetCareEditModal extends javax.swing.JFrame {
     String checkOut;
     String discountStatus;
     String status;
+    String totalPrice;
 
     /**
      * Creates new form PetCareEditModal
      */
-    public PetCareEditModal(PetCareForm petCareForm, String id, String customer, String pet, String checkIn, String checkOut, String discount, String status) {
+    public PetCareEditModal(PetCareForm petCareForm, String id, String customer, String pet, String checkIn, String checkOut, String discount, String total, String status) {
         initComponents();
 
+        // Initialized variable
         this.petCareForm = petCareForm;
         this.id = id;
         this.pet = pet;
         this.customer = customer;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
-        this.discountStatus = discountStatus;
+        this.discountStatus = discount;
         this.status = status;
+        this.totalPrice = total;
 
         // Set the frame to the center of the screen
         centerFrameOnScreen();
@@ -75,11 +78,18 @@ public class PetCareEditModal extends javax.swing.JFrame {
         // Set the text field
         setField();
 
-        // Set the price
+        // Set the price per day
         setPrice();
 
-        // Set the summary
-        setSummary();
+        // Set the total price
+        textTotal.setText(totalPrice);
+
+        // Set notification instance
+        Notifications.getInstance().setJFrame(this);
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     private void setField() {
@@ -94,7 +104,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
             dateCheckIn.setDate(dateIn);
             dateCheckOut.setDate(dateOut);
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -158,7 +168,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -187,7 +197,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 }
             }
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
     
@@ -201,16 +211,16 @@ public class PetCareEditModal extends javax.swing.JFrame {
             try {
                 int total = Integer.parseInt(discountStatus);
     
-                if (total >= 1) {
+                if (total > 0) {
                     comboDiscount.setSelectedItem("Ya");
                 } else {
                     comboDiscount.setSelectedItem("Tidak");
                 }
             } catch (NumberFormatException e) {
-                petCareForm.showNotification("Invalid discount value: " + discountStatus, Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Invalid discount value: " + discountStatus, Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
         }
-    }    
+    }       
 
     private void setComboStatus() {
         comboStatus.removeAllItems();
@@ -252,7 +262,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 textTotalDay.setText("0");
             }
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -269,7 +279,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 textPricePerDay.setText(String.valueOf(pricePerDay));
             }
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
     
@@ -286,7 +296,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
                 textDiscount.setText(String.valueOf(discount));
             }
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
         
@@ -301,7 +311,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
 
             textTotal.setText(String.valueOf(total));
         } catch (NumberFormatException e) {
-            petCareForm.showNotification("Invalid input. Please enter valid numbers.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification("Invalid input. Please enter valid numbers.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -666,7 +676,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
 
             if (comboCustomer.getSelectedItem() == null || comboPet.getSelectedItem() == null || dateCheckIn.getDate() == null || dateCheckOut.getDate() == null || comboDiscount.getSelectedItem() == null || comboStatus.getSelectedItem() == null) {
-                petCareForm.showNotification("Please fill all the fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Please fill all the fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
 
@@ -686,15 +696,15 @@ public class PetCareEditModal extends javax.swing.JFrame {
             int rowsAffected = pst.executeUpdate();
 
             if (rowsAffected > 0) {
-                petCareForm.showNotification("Pet care information updated successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                showNotification("Pet care information updated successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 petCareForm.refreshTable();
             } else {
-                petCareForm.showNotification("Failed to update pet care information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Failed to update pet care information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
 
             close();
         } catch (Exception e) {
-            petCareForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonAddActionPerformed
 

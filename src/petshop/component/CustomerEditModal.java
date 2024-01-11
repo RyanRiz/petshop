@@ -37,6 +37,8 @@ public class CustomerEditModal extends javax.swing.JFrame {
      */
     public CustomerEditModal(CustomerForm customerForm, String id, String name, String phone, String gender, String city, String address) {
         initComponents();
+
+        // Initialized variable
         this.customerForm = customerForm;
         this.id = Integer.parseInt(id);
         this.name = name;
@@ -45,11 +47,27 @@ public class CustomerEditModal extends javax.swing.JFrame {
         this.city = city;
         this.address = address;
 
+        // Set the form to be draggable
         addDraggableMouseListener();
+
+        // Center the form
         centerFrameOnScreen();
+
+        // Set the field data
         setFieldData();
+
+        // Set the gender combobox
         setGenderComboBox();
+
+        // Set placeholder
         setPlaceholder();
+
+        // Set notification instance
+        Notifications.getInstance().setJFrame(this);
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     private void setPlaceholder() {
@@ -342,7 +360,7 @@ public class CustomerEditModal extends javax.swing.JFrame {
             String address = areaAddress.getText();
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                customerForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -360,15 +378,15 @@ public class CustomerEditModal extends javax.swing.JFrame {
             int rowsAffected = pst.executeUpdate();
     
             if (rowsAffected > 0) {
-                customerForm.showNotification("Success updated customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                showNotification("Success updated customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 customerForm.setTableData();
             } else {
-                customerForm.showNotification("Failed to update customer information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Failed to update customer information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
 
             close();
         } catch (Exception e) {
-            customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonUpdateMouseClicked
 

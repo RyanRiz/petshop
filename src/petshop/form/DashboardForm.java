@@ -19,8 +19,13 @@ public class DashboardForm extends javax.swing.JPanel {
     public DashboardForm() {
         initComponents();
 
+        // Set customer data
         setCustomerData();
+
+        // Set pet data
         setPetData();
+
+        // Set pet care data
         setPetCareData();
     }
 

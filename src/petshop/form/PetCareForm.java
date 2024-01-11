@@ -29,13 +29,15 @@ public class PetCareForm extends javax.swing.JPanel {
      */
     public PetCareForm() {
         initComponents();
-        addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        
+        // Set custom cursor
+        customCursor();
 
-        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
-
+        // Set table data
         setTableData();
+
+        // Set placeholder
+        setPlaceholder();
     }
 
     public void refreshTable() {
@@ -92,7 +94,17 @@ public class PetCareForm extends javax.swing.JPanel {
         } catch (Exception e) {
             Notifications.getInstance().show(Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT, e.getMessage());
         }
-    }       
+    }
+    
+    private void customCursor() {
+        addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private void setPlaceholder() {
+        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -406,9 +418,10 @@ public class PetCareForm extends javax.swing.JPanel {
             String checkIn = petCareTable.getValueAt(selectedRow, 3).toString();
             String checkOut = petCareTable.getValueAt(selectedRow, 4).toString();
             String discount = petCareTable.getValueAt(selectedRow, 5).toString();
+            String total = petCareTable.getValueAt(selectedRow, 6).toString();
             String status = petCareTable.getValueAt(selectedRow, 7).toString();
 
-            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, checkIn, checkOut, discount ,status);
+            PetCareEditModal petCareEditModal = new PetCareEditModal(this, id, customer, pet, checkIn, checkOut, discount, total, status);
             petCareEditModal.setVisible(true);
         }else{
             showNotification("Please select a row to edit.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);

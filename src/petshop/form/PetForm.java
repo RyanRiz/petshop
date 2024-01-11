@@ -32,13 +32,14 @@ public class PetForm extends javax.swing.JPanel {
     public PetForm() {
         initComponents();
 
-        addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        // Set custom cursor
+        customCursor();
 
+        // Set table data
         setTableData();
 
-        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
+        // Set placeholder
+        setPlaceholder();
     }
 
     public void setTableData(){
@@ -85,6 +86,16 @@ public class PetForm extends javax.swing.JPanel {
 
     public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
         Notifications.getInstance().show(type, location, message);
+    }
+
+    private void customCursor() {
+        addButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    private void setPlaceholder() {
+        textSearch.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search...");
     }
 
     /**

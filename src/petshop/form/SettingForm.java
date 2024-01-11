@@ -19,7 +19,10 @@ public class SettingForm extends javax.swing.JPanel {
     public SettingForm() {
         initComponents();
 
+        // Set field data
         setField();
+
+        // Set account data
         setAccount();
     }
 

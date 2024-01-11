@@ -29,6 +29,8 @@ public class PetEditModal extends javax.swing.JFrame {
      */
     public PetEditModal(PetForm petForm, String id, String name, String breed, String color, String age, String description, String customerName) {
         initComponents();
+
+        // initialized variables
         this.petForm = petForm;
         this.id = id;
         this.name = name;
@@ -38,11 +40,27 @@ public class PetEditModal extends javax.swing.JFrame {
         this.description = description;
         this.customerName = customerName;
 
+        // Set the form to be draggable
         addDraggableMouseListener();
+
+        // Center the form
         centerFrameOnScreen();
+
+        // Set customer combo box
         setComboCustomer();
+
+        // Set field data
         setFieldData();
+
+        // Set placeholder
         setPlaceholder();
+
+        // Set notification instance
+        Notifications.getInstance().setJFrame(this);
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     private void setPlaceholder() {
@@ -92,7 +110,7 @@ public class PetEditModal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -365,7 +383,7 @@ public class PetEditModal extends javax.swing.JFrame {
             String customerName = comboCustomer.getSelectedItem().toString();
     
             if (name.isEmpty() || breed.isEmpty() || color.isEmpty() || ageText.isEmpty()) {
-                petForm.showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -373,7 +391,7 @@ public class PetEditModal extends javax.swing.JFrame {
             try {
                 age = Integer.parseInt(ageText);
             } catch (NumberFormatException ex) {
-                petForm.showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -392,15 +410,15 @@ public class PetEditModal extends javax.swing.JFrame {
             int rowsAffected = pst.executeUpdate();
     
             if (rowsAffected > 0) {
-                petForm.showNotification("Success updated pets information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                showNotification("Success updated pets information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 petForm.refreshTable();
             } else {
-                petForm.showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
             }
     
             close();
         } catch (Exception e) {
-            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonUpdateMouseClicked
 

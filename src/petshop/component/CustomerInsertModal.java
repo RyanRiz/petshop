@@ -31,11 +31,28 @@ public class CustomerInsertModal extends javax.swing.JFrame {
      */
     public CustomerInsertModal(CustomerForm customerForm) {
         initComponents();
+
+        // Initialized variable
         this.customerForm = customerForm;
+
+        // Set the form to be draggable
         addDraggableMouseListener();
+
+        // Center the form
         centerFrameOnScreen();
+
+        // Set gender combobox
         setGenderComboBox();
+
+        // Set placeholder
         setPlaceholder();
+
+        // Set notification instance
+        Notifications.getInstance().setJFrame(this);
+    }
+
+    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
+        Notifications.getInstance().show(type, location, message);
     }
 
     private void setPlaceholder() {
@@ -298,7 +315,7 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             String address = areaAddress.getText();
     
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                customerForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -316,15 +333,15 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             int rowsAffected = pst.getUpdateCount();
 
             if (rowsAffected > 0) {
-                customerForm.showNotification("Success added customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                showNotification("Success added customer information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 customerForm.setTableData();
             } else {
-                customerForm.showNotification("Failed to add customer information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                showNotification("Failed to add customer information", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
             }
 
             close();
         } catch (Exception e) {
-            customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonAdd1MouseClicked
 

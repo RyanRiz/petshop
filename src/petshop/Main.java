@@ -31,12 +31,16 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+
+        // Set frame to center
         centerFrameOnScreen();
 
+        // Set dashboard as default
         DashboardForm dashboardForm = new DashboardForm();
         bodyPanel.removeAll();
         bodyPanel.add(dashboardForm);
 
+        // Set notification instance
         Notifications.getInstance().setJFrame(this);
     }
 
