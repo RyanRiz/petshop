@@ -44,6 +44,7 @@ public class Login extends javax.swing.JFrame {
         textUsername.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Username");
         textPassword.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Password");
 
+        // Set notification instance
         Notifications.getInstance().setJFrame(this);
     }
 
@@ -289,6 +290,8 @@ public class Login extends javax.swing.JFrame {
 
             if (rs.next()) {
                 close();
+                
+                // Show the main frame
                 Main main = new Main();
                 main.setVisible(true);
             } else {

@@ -352,7 +352,6 @@ public class CustomerEditModal extends javax.swing.JFrame {
 
     private void buttonUpdateMouseClicked(java.awt.event.MouseEvent evt) {
         try {
-            // Validate that none of the fields are null or empty
             String name = textName.getText();
             String phone = textPhone.getText();
             String gender = (comboGender.getSelectedItem().equals("Laki-Laki")) ? "1" : "0";
