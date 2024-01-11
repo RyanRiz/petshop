@@ -187,14 +187,14 @@ ALTER TABLE `users`
 -- Ketidakleluasaan untuk tabel `petcares`
 --
 ALTER TABLE `petcares`
-  ADD CONSTRAINT `petcares_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `petcares_pet_id_foreign` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`);
+  ADD CONSTRAINT `petcares_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `petcares_pet_id_foreign` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`id`) ON DELETE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `pets`
 --
 ALTER TABLE `pets`
-  ADD CONSTRAINT `pets_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`);
+  ADD CONSTRAINT `pets_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
