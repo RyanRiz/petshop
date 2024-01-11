@@ -683,8 +683,7 @@ public class PetCareEditModal extends javax.swing.JFrame {
             pst.setInt(7, comboStatus.getSelectedItem() != null && comboStatus.getSelectedItem().equals("On Progress") ? 0 : 1);
             pst.setString(8, textID.getText());
 
-            pst.execute();
-            int rowsAffected = pst.getUpdateCount();
+            int rowsAffected = pst.executeUpdate();
 
             if (rowsAffected > 0) {
                 petCareForm.showNotification("Pet care information updated successfully", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);

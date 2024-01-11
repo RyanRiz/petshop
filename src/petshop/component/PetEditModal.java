@@ -354,42 +354,50 @@ public class PetEditModal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buttonUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonUpdateMouseClicked
-        try{
+    private void buttonUpdateMouseClicked(java.awt.event.MouseEvent evt) {
+        try {
             String id = textID.getText();
             String name = textPetName.getText();
             String breed = textBreed.getText();
             String color = textColor.getText();
-            String age = textAge.getText();
+            String ageText = textAge.getText();
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
-
-            if (name.isEmpty() || breed.isEmpty() || color.isEmpty() || age.isEmpty() || description.isEmpty()) {
+    
+            if (name.isEmpty() || breed.isEmpty() || color.isEmpty() || ageText.isEmpty()) {
                 petForm.showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
-
+    
+            int age;
+            try {
+                age = Integer.parseInt(ageText);
+            } catch (NumberFormatException ex) {
+                petForm.showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
+    
             String sql = "UPDATE pets SET name = ?, breed = ?, color = ?, age = ?, description = ?, customer_id = (SELECT id FROM customers WHERE name = ?) WHERE id = ?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-
+    
             pst.setString(1, name);
             pst.setString(2, breed);
             pst.setString(3, color);
-            pst.setString(4, age);
+            pst.setInt(4, age);
             pst.setString(5, description);
             pst.setString(6, customerName);
             pst.setString(7, id);
-
+    
             int rowsAffected = pst.executeUpdate();
-
-            if (rowsAffected > 0){
+    
+            if (rowsAffected > 0) {
                 petForm.showNotification("Success updated pets information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 petForm.refreshTable();
             } else {
                 petForm.showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
             }
-
+    
             close();
         } catch (Exception e) {
             petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);

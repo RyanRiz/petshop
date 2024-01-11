@@ -324,40 +324,49 @@ public class PetInsertModal extends javax.swing.JFrame {
             String petName = textPetName.getText();
             String breed = textBreed.getText();
             String color = textColor.getText();
-            int age = Integer.parseInt(textAge.getText());
+            String ageText = textAge.getText();
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
     
-            if (petName.isEmpty() || breed.isEmpty() || color.isEmpty()) {
+            if (petName.isEmpty() || breed.isEmpty() || color.isEmpty() || ageText.isEmpty()) {
                 petForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
-            
-                String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id) VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1))";
-                java.sql.Connection conn = (java.sql.Connection) Database.configDB();
-                java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-                pst.setString(1, petName);
-                pst.setString(2, breed);
-                pst.setString(3, color);
-                pst.setInt(4, age);
-                pst.setString(5, description);
-                pst.setString(6, customerName);
     
-                pst.execute();
-                int rowsAffected = pst.getUpdateCount();
-
-                if (rowsAffected > 0) {
-                    petForm.showNotification("Pet added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
-                    petForm.setTableData();
-                } else {
-                    petForm.showNotification("Failed to add pet.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
-                }
-
-                close();
-            } catch (Exception e) {
-                petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            int age;
+            try {
+                age = Integer.parseInt(ageText);
+            } catch (NumberFormatException ex) {
+                petForm.showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
             }
-    }                                         
+    
+            String sql = "INSERT INTO pets (name, breed, color, age, description, customer_id) VALUES (?, ?, ?, ?, ?, (SELECT id FROM customers WHERE name = ? LIMIT 1))";
+            java.sql.Connection conn = (java.sql.Connection) Database.configDB();
+            java.sql.PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, petName);
+            pst.setString(2, breed);
+            pst.setString(3, color);
+            pst.setInt(4, age);
+            pst.setString(5, description);
+            pst.setString(6, customerName);
+    
+            pst.execute();
+            int rowsAffected = pst.getUpdateCount();
+    
+            if (rowsAffected > 0) {
+                petForm.showNotification("Pet added successfully.", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                petForm.setTableData();
+            } else {
+                petForm.showNotification("Failed to add pet.", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            }
+    
+            close();
+        } catch (Exception e) {
+            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            System.out.println(e.getMessage());
+        }
+    }                                             
 
     private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
         resetForm();
