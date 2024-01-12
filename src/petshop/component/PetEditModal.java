@@ -54,13 +54,6 @@ public class PetEditModal extends javax.swing.JFrame {
 
         // Set placeholder
         setPlaceholder();
-
-        // Set notification instance
-        Notifications.getInstance().setJFrame(this);
-    }
-
-    public void showNotification(String message, Notifications.Type type, Notifications.Location location) {
-        Notifications.getInstance().show(type, location, message);
     }
 
     private void setPlaceholder() {
@@ -110,7 +103,7 @@ public class PetEditModal extends javax.swing.JFrame {
             }
 
         } catch (Exception e) {
-            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }
 
@@ -383,7 +376,7 @@ public class PetEditModal extends javax.swing.JFrame {
             String customerName = comboCustomer.getSelectedItem().toString();
     
             if (name.isEmpty() || breed.isEmpty() || color.isEmpty() || ageText.isEmpty()) {
-                showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                petForm.showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -391,7 +384,7 @@ public class PetEditModal extends javax.swing.JFrame {
             try {
                 age = Integer.parseInt(ageText);
             } catch (NumberFormatException ex) {
-                showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                petForm.showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -410,15 +403,15 @@ public class PetEditModal extends javax.swing.JFrame {
             int rowsAffected = pst.executeUpdate();
     
             if (rowsAffected > 0) {
-                showNotification("Success updated pets information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
+                petForm.showNotification("Success updated pets information", Notifications.Type.SUCCESS, Notifications.Location.TOP_RIGHT);
                 petForm.refreshTable();
             } else {
-                showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                petForm.showNotification("Failed updated pets information", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
             }
     
             close();
         } catch (Exception e) {
-            showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+            petForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonUpdateMouseClicked
 
