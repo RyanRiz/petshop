@@ -684,6 +684,8 @@ public class PetCareEditModal extends javax.swing.JFrame {
             String formattedDateIn = dateFormat.format(dateCheckIn.getDate());
             String formattedDateOut = dateFormat.format(dateCheckOut.getDate());
 
+            total = Integer.parseInt(textTotal.getText());
+
             pst.setString(1, comboCustomer.getSelectedItem().toString());
             pst.setString(2, comboPet.getSelectedItem().toString());
             pst.setString(3, formattedDateIn);
