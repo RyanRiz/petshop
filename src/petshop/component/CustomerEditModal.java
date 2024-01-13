@@ -355,6 +355,11 @@ public class CustomerEditModal extends javax.swing.JFrame {
                 customerForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
+
+            if (!isNumeric(phone)) {
+                customerForm.showNotification("Phone must be a numeric value", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
     
             String sql = "UPDATE customers SET name=?, phone=?, gender=?, address=?, city=? WHERE id=?";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
@@ -381,6 +386,10 @@ public class CustomerEditModal extends javax.swing.JFrame {
             customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonUpdateMouseClicked
+
+    private boolean isNumeric(String str) {
+        return str.matches("\\d+");
+    }
 
     /**
      * @param args the command line arguments

@@ -273,9 +273,19 @@ public class SettingForm extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private boolean isNumeric(String str) {
+        return str.matches("\\d+");
+    }
+
     private void buttonPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPriceActionPerformed
         try {
             String price = textPrice.getText();
+
+            if(!isNumeric(price)) {
+                showNotification("Price must be numeric!", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
+
             String sql = "UPDATE settings SET price = '"+price+"'";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
@@ -289,6 +299,12 @@ public class SettingForm extends javax.swing.JPanel {
     private void buttonDiscountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonDiscountActionPerformed
         try {
             String discount = textDiscount.getText();
+
+            if(!isNumeric(discount)) {
+                showNotification("Discount must be numeric!", Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
+
             String sql = "UPDATE settings SET discount = '"+discount+"'";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);

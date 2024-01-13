@@ -360,12 +360,6 @@ public class Main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    boolean dashIconClicked = true;
-    boolean userIconClicked = false;
-    boolean petCareIconClicked = false;
-    boolean saleIconClicked = false;
-    boolean settingIconClicked = false;
-
     private void dashboardIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardIconMouseClicked
         ImageIcon imageClicked = new ImageIcon(getClass().getResource("/petshop/icon/dashboard-custom.png"));
         ImageIcon userNormal = new ImageIcon(getClass().getResource("/petshop/icon/account-box-normal.png"));
@@ -373,23 +367,18 @@ public class Main extends javax.swing.JFrame {
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
-        dashIconClicked = true;
         dashboardIcon.setBackground(new Color(239,246,255));
         jLabel6.setIcon(imageClicked);
 
-        userIconClicked = false;
         userIcon.setBackground(new Color(255,255,255));
         jLabel7.setIcon(userNormal);
 
-        petCareIconClicked = false;
         petCareIcon.setBackground(new Color(255,255,255));
         jLabel8.setIcon(petCareNormal);
 
-        saleIconClicked = false;
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
 
@@ -407,23 +396,18 @@ public class Main extends javax.swing.JFrame {
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
-        userIconClicked = true;
         userIcon.setBackground(new Color(239, 246, 255));
         jLabel7.setIcon(imageClicked);
 
-        dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
         jLabel6.setIcon(dashNormal);
 
-        petCareIconClicked = false;
         petCareIcon.setBackground(new Color(255, 255, 255));
         jLabel8.setIcon(petCareNormal);
 
-        saleIconClicked = false;
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
 
@@ -441,23 +425,18 @@ public class Main extends javax.swing.JFrame {
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
-        petCareIconClicked = true;
         petCareIcon.setBackground(new Color(239, 246, 255));
         jLabel8.setIcon(imageClicked);
 
-        dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
         jLabel6.setIcon(dashNormal);
 
-        userIconClicked = false;
         userIcon.setBackground(new Color(255, 255, 255));
         jLabel7.setIcon(userNormal);
 
-        saleIconClicked = false;
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 
-        settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
 
@@ -475,23 +454,18 @@ public class Main extends javax.swing.JFrame {
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon settingNormal = new ImageIcon(getClass().getResource("/petshop/icon/cog-normal.png"));
 
-        saleIconClicked = true;
         transactionIcon.setBackground(new Color(239, 246, 255));
         jLabel9.setIcon(imageClicked);
 
-        dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
         jLabel6.setIcon(dashNormal);
 
-        userIconClicked = false;
         userIcon.setBackground(new Color(255, 255, 255));
         jLabel7.setIcon(userNormal);
 
-        petCareIconClicked = false;
         petCareIcon.setBackground(new Color(255, 255, 255));
         jLabel8.setIcon(petCareNormal);
 
-        settingIconClicked = false;
         settingIcon.setBackground(new Color(255,255,255));
         jLabel11.setIcon(settingNormal);
 
@@ -509,23 +483,18 @@ public class Main extends javax.swing.JFrame {
         ImageIcon petCareNormal = new ImageIcon(getClass().getResource("/petshop/icon/paw-normal-40.png"));
         ImageIcon saleNormal = new ImageIcon(getClass().getResource("/petshop/icon/pet-friendly-normal-40.png"));
 
-        settingIconClicked = true;
         settingIcon.setBackground(new Color(239, 246, 255));
         jLabel11.setIcon(imageClicked);
 
-        dashIconClicked = false;
         dashboardIcon.setBackground(new Color(255, 255, 255));
         jLabel6.setIcon(dashNormal);
 
-        userIconClicked = false;
         userIcon.setBackground(new Color(255, 255, 255));
         jLabel7.setIcon(userNormal);
 
-        petCareIconClicked = false;
         petCareIcon.setBackground(new Color(255, 255, 255));
         jLabel8.setIcon(petCareNormal);
 
-        saleIconClicked = false;
         transactionIcon.setBackground(new Color(255,255,255));
         jLabel9.setIcon(saleNormal);
 

@@ -306,16 +306,21 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             String gender = (comboGender.getSelectedItem().equals("Laki-Laki")) ? "1" : "0";
             String city = textCity.getText();
             String address = areaAddress.getText();
-    
+
             if (name.isEmpty() || phone.isEmpty() || gender.isEmpty() || city.isEmpty() || address.isEmpty()) {
-                customerForm.showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.TOP_RIGHT);
+                customerForm.showNotification("Please fill all the fields", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
-    
+
+            if (!isNumeric(phone)) {
+                customerForm.showNotification("Phone must be a numeric value", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+                return;
+            }
+
             String sql = "INSERT INTO customers (name, phone, gender, city, address) VALUES (?, ?, ?, ?, ?)";
             java.sql.Connection conn = (java.sql.Connection) Database.configDB();
             java.sql.PreparedStatement pst = conn.prepareStatement(sql);
-    
+
             pst.setString(1, name);
             pst.setString(2, phone);
             pst.setString(3, gender);
@@ -337,6 +342,10 @@ public class CustomerInsertModal extends javax.swing.JFrame {
             customerForm.showNotification(e.getMessage(), Notifications.Type.ERROR, Notifications.Location.BOTTOM_RIGHT);
         }
     }//GEN-LAST:event_buttonAdd1MouseClicked
+
+    private boolean isNumeric(String str) {
+        return str.matches("\\d+");
+    }
 
     private void buttonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelActionPerformed
         close();

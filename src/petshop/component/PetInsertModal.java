@@ -334,20 +334,17 @@ public class PetInsertModal extends javax.swing.JFrame {
             String petName = textPetName.getText();
             String breed = textBreed.getText();
             String color = textColor.getText();
-            String ageText = textAge.getText();
+            String age = textAge.getText();
             String description = areaDescription.getText();
             String customerName = comboCustomer.getSelectedItem().toString();
     
-            if (petName.isEmpty() || breed.isEmpty() || color.isEmpty() || ageText.isEmpty()) {
+            if (petName.isEmpty() || breed.isEmpty() || color.isEmpty() || age.isEmpty()) {
                 petForm.showNotification("Please fill in all fields.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
-            int age;
-            try {
-                age = Integer.parseInt(ageText);
-            } catch (NumberFormatException ex) {
-                petForm.showNotification("Age must be a valid number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
+            if (!isNumeric(age)) {
+                petForm.showNotification("Age must be a number.", Notifications.Type.WARNING, Notifications.Location.BOTTOM_RIGHT);
                 return;
             }
     
@@ -357,7 +354,7 @@ public class PetInsertModal extends javax.swing.JFrame {
             pst.setString(1, petName);
             pst.setString(2, breed);
             pst.setString(3, color);
-            pst.setInt(4, age);
+            pst.setString(4, age);
             pst.setString(5, description);
             pst.setString(6, customerName);
     
@@ -387,6 +384,10 @@ public class PetInsertModal extends javax.swing.JFrame {
 
     private void close() {
         this.dispose();
+    }
+
+    private boolean isNumeric(String str) {
+        return str.matches("\\d+");
     }
 
     /**
