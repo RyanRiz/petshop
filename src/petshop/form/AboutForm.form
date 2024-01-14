@@ -118,6 +118,11 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel2">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/petshop/icon/ryan.png"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
@@ -198,6 +203,11 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel6">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/petshop/icon/muhammad_aldi.jpg"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
@@ -207,7 +217,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ryan Rizky Pratama"/>
+                <Property name="text" type="java.lang.String" value="Muhammad Aldi"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -218,7 +228,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C030322033"/>
+                <Property name="text" type="java.lang.String" value="C030322010"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel9">
@@ -278,6 +288,11 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel18">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/petshop/icon/aldi_riadi.jpg"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel19">
               <Properties>
@@ -287,7 +302,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ryan Rizky Pratama"/>
+                <Property name="text" type="java.lang.String" value="Aldi Riadi"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel20">
@@ -298,7 +313,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C030322033"/>
+                <Property name="text" type="java.lang.String" value="C030322003"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel21">
@@ -358,6 +373,11 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel10">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/petshop/icon/noor_rizky_permana.jpg"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel11">
               <Properties>
@@ -367,7 +387,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ryan Rizky Pratama"/>
+                <Property name="text" type="java.lang.String" value="Noor Rizky Permana"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
@@ -378,7 +398,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C030322033"/>
+                <Property name="text" type="java.lang.String" value="C030322027"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel13">
@@ -438,6 +458,11 @@
           </Layout>
           <SubComponents>
             <Component class="javax.swing.JLabel" name="jLabel14">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/petshop/icon/Nazemi.jpg"/>
+                </Property>
+              </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel15">
               <Properties>
@@ -447,7 +472,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Ryan Rizky Pratama"/>
+                <Property name="text" type="java.lang.String" value="Noor Ermiliyawati"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel16">
@@ -458,7 +483,7 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="59" green="3e" red="39" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="C030322033"/>
+                <Property name="text" type="java.lang.String" value="C030322026"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel17">

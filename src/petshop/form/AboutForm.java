@@ -65,6 +65,8 @@ public class AboutForm extends javax.swing.JPanel {
 
         panelRounded1.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/ryan.png"))); // NOI18N
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(57, 62, 89));
         jLabel3.setText("Ryan Rizky Pratama");
@@ -110,13 +112,15 @@ public class AboutForm extends javax.swing.JPanel {
 
         panelRounded2.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/muhammad_aldi.jpg"))); // NOI18N
+
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel7.setText("Ryan Rizky Pratama");
+        jLabel7.setText("Muhammad Aldi");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel8.setText("C030322033");
+        jLabel8.setText("C030322010");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(57, 62, 89));
@@ -155,13 +159,15 @@ public class AboutForm extends javax.swing.JPanel {
 
         panelRounded3.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/aldi_riadi.jpg"))); // NOI18N
+
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel19.setText("Ryan Rizky Pratama");
+        jLabel19.setText("Aldi Riadi");
 
         jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel20.setText("C030322033");
+        jLabel20.setText("C030322003");
 
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(57, 62, 89));
@@ -200,13 +206,15 @@ public class AboutForm extends javax.swing.JPanel {
 
         panelRounded4.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/noor_rizky_permana.jpg"))); // NOI18N
+
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel11.setText("Ryan Rizky Pratama");
+        jLabel11.setText("Noor Rizky Permana");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel12.setText("C030322033");
+        jLabel12.setText("C030322027");
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(57, 62, 89));
@@ -245,13 +253,15 @@ public class AboutForm extends javax.swing.JPanel {
 
         panelRounded5.setBackground(new java.awt.Color(255, 255, 255));
 
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/petshop/icon/Nazemi.jpg"))); // NOI18N
+
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel15.setText("Ryan Rizky Pratama");
+        jLabel15.setText("Noor Ermiliyawati");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(57, 62, 89));
-        jLabel16.setText("C030322033");
+        jLabel16.setText("C030322026");
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(57, 62, 89));
